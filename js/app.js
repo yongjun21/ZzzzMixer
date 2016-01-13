@@ -1,6 +1,7 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
-// import Player from './components/player.jsx'
+import Player from './components/player.jsx'
 // import Library from './components/library.jsx'
 import Mixing from './components/mixing.jsx'
 // import Compose from './components/compose.jsx'
@@ -17,4 +18,5 @@ import Mixing from './components/mixing.jsx'
 //     React.render(<Compose playing={states.playing} user={states.userID}/>, document.getElementById('compose'))
 //   })
 
-React.render(<Mixing />, document.getElementById('mixing'))
+ReactDOM.render(<Mixing />, document.getElementById('mixing'))
+ReactDOM.render(<Player title={'Untitled'} tracks={[1, 2, 3]} samples={[{}]} />, document.getElementById('player'))

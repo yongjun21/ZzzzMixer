@@ -15,6 +15,43 @@ export default class Player extends React.Component {
       timer: 0,
       countdown: 0
     }
+    this.togglePlay = this.togglePlay.bind(this)
+    this.togglePause = this.togglePause.bind(this)
+    this.setVolume = this.setVolume.bind(this)
+    this.startCountdown = this.startCountdown.bind(this)
+  }
+
+  togglePlay (event) {
+    this.setState({playing: true})
+  }
+
+  togglePause (event) {
+    this.setState({playing: false})
+  }
+
+  setVolume (event) {
+    this.setState({volume: event.target.value})
+  }
+
+  startCountdown () {
+    if (this.state.timer) window.clearInterval(this.state.timer)
+    function intervalCallback () {
+      if (!this.state.playing) return
+      if (this.state.countdown > 0) {
+        this.setState({countdown: this.state.countdown - 1})
+      } else {
+        window.clearInterval(this.state.timer)
+        this.setState({
+          playing: false,
+          timer: 0,
+          countdown: 0
+        })
+      }
+    }
+    this.setState({
+      timer: window.setInterval(intervalCallback.bind(this), 1000),
+      countdown: 10
+    })
   }
 
   render () {
@@ -25,7 +62,7 @@ export default class Player extends React.Component {
     }
 
     const pauseButtonProps = {
-      className: this.state.playing ? 'fa fa-play' : 'highlight fa fa-play',
+      className: this.state.playing ? 'fa fa-pause' : 'highlight fa fa-pause',
       disabled: !this.state.playing,
       onClick: this.togglePause
     }
@@ -37,7 +74,7 @@ export default class Player extends React.Component {
       max: 10,
       step: 1,
       value: this.state.volume,
-      onChange: this.setVolume()
+      onChange: this.setVolume
     }
 
     const timerProps = {

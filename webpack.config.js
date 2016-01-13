@@ -6,6 +6,12 @@ module.exports = {
     'webpack/hot/only-dev-server',
     './js/app'
   ],
+  resolve: {
+    alias: {
+      'howler': './../vendor/howler.min.js'
+    },
+    modulesDirectories: [ 'node_modules' ]
+  },
   output: {
     path: __dirname,
     filename: 'bundle.js'

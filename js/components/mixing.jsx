@@ -1,4 +1,7 @@
+/* globals Audio */
+
 import React from 'react'
+
 import classNames from 'classnames'
 
 import './mixing.styl'
@@ -42,29 +45,47 @@ class Bubble extends React.Component {
   }
 
   handleClick (e) {
-    // const target = React.findDOMNode(this)
-    // target.classList.toggle('Mixing-bubble-animate')
     if (!this.state.selected) {
       this.setState({selected: true})
+      this.playSound('open')
     } else if (this.state.bubbleSize === 3) {
       this.setState({
         selected: false,
-        bubbleSize: 1
+        bubbleSize: 0
       })
+      this.playSound('close')
+      setTimeout(() => { this.setState({bubbleSize: 1}) }, 200)
+    } else {
+      this.setState({bubbleSize: this.state.bubbleSize + 1})
+      this.playSound('volume')
     }
-    else this.setState({bubbleSize: this.state.bubbleSize + 1})
-    console.log(this.state.selected, this.state.bubbleSize)
+  }
+
+  playSound (type) {
+    const isSafari = (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1)
+    if (!isSafari) {
+      let audio
+      if (type === 'open') {
+        audio = new Audio('./ui-sounds/open-bubble.mp3')
+      } else if (type === 'volume') {
+        audio = new Audio('./ui-sounds/single-bubble.mp3')
+      } else if (type === 'close') {
+        audio = new Audio('./ui-sounds/close-bubble.mp3')
+      }
+      audio.play()
+    }
   }
 
   render () {
     const self = this
 
-    let bubbleSize = this.state.bubbleSize
+    // let bubbleSize = this.state.bubbleSize
 
     const bubbleClass = classNames({
       'Mixing-bubble': true,
       'Mixing-bubble-selected': this.state.selected,
       // ['Mixing-bubble-${buttonSize}']: this.state.selected && (this.state.bubbleSize > 1)
+      'Mixing-bubble-0': !this.state.selected && (this.state.bubbleSize === 0),
       'Mixing-bubble-2': this.state.selected && (this.state.bubbleSize === 2),
       'Mixing-bubble-3': this.state.selected && (this.state.bubbleSize === 3)
     })
