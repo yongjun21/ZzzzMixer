@@ -1,20 +1,20 @@
-var webpack = require('webpack');
+var webpack = require('webpack')
 
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:8080',
     'webpack/hot/only-dev-server',
-    './js/app'
+    './js/tmp'
   ],
   output: {
-    path: __dirname + '/js/',
+    path: __dirname,
     filename: 'bundle.js'
   },
   module: {
     loaders: [
       {
         test: /.jsx?$/,
-        loaders: ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015'],
+        loaders: ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'],
         exclude: /node_modules/
       }
     ]
@@ -25,4 +25,4 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ]
-};
+}
