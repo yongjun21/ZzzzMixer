@@ -19,7 +19,7 @@ export default class World extends React.Component {
   render () {
     const output = []
     for (let i = 0; i < this.state.times; i++) {
-      output.push(<h1 key={i}>World</h1>)
+      output.push(<h1 key={i}>F</h1>)
     }
     return (
       <div>

@@ -8,7 +8,7 @@ window.PouchDB = require('pouchDB')
 const _state = {
   userID: '',
   playing: {
-    title: '',
+    title: 'Untitled',
     mix: [],
     tags: []
   }
