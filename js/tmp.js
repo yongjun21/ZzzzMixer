@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import World from './components/world'
+import Player from './components/player'
 
-ReactDOM.render(<World times={0} />, document.getElementById('player'))
+ReactDOM.render(<Player title={'Untitled'} tracks={[1, 2, 3]} samples={[{}]} />, document.getElementById('player'))
