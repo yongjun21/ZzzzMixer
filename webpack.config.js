@@ -16,6 +16,10 @@ module.exports = {
         test: /.jsx?$/,
         loaders: ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'],
         exclude: /node_modules/
+      },
+      {
+        test: /\.styl$/,
+        loader: 'style-loader!css-loader!stylus-loader'
       }
     ]
   },
