@@ -2,8 +2,9 @@ import React from 'react'
 import Player from './player'
 import Compose from './compose'
 import Library from './library'
-
-const userID = 'Anon'
+import MixingRoom from './mixing'
+import update from 'react-addons-update'
+import sortBy from 'lodash.sortby'
 
 const collection = [
   {
@@ -11,9 +12,9 @@ const collection = [
     title: 'Hello',
     composedBy: 'Anon',
     layers: [
-      {layerID: 1, volume: 3},
-      {layerID: 2, volume: 3},
-      {layerID: 3, volume: 3}
+      {sampleID: 1, volume: 3},
+      {sampleID: 2, volume: 3},
+      {sampleID: 3, volume: 3}
     ],
     tags: ['Nature', 'Sea'],
     timesPlayed: 10
@@ -22,9 +23,9 @@ const collection = [
     title: 'World',
     composedBy: 'yongjun21',
     layers: [
-      {layerID: 1, volume: 2},
-      {layerID: 3, volume: 3},
-      {layerID: 5, volume: 4}
+      {sampleID: 1, volume: 2},
+      {sampleID: 3, volume: 3},
+      {sampleID: 5, volume: 4}
     ],
     tags: ['New age'],
     timesPlayed: 99
@@ -33,85 +34,111 @@ const collection = [
     title: 'Happy birthday',
     composedBy: 'Jared Tong',
     layers: [
-      {layerID: 7, volume: 1},
-      {layerID: 8, volume: 1},
-      {layerID: 9, volume: 1}
+      {sampleID: 7, volume: 1},
+      {sampleID: 8, volume: 1},
+      {sampleID: 9, volume: 1}
     ],
     tags: ['Urban', 'White noise'],
     timesPlayed: 99
   }
 ]
 
-function newTrack () {
-  return {
-    title: '',
-    composedBy: userID,
-    layers: [],
-    tags: []
-  }
-}
-
 export default class Main extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      current: newTrack(),
+      userID: 'Jared Tong',
+      currentTrackID: -1,
+      layers: [],
       library: collection
     }
-    this.trackLoader = this.trackLoader.bind(this)
+    this.volumeUpLayer = this.volumeUpLayer.bind(this)
+    this.loadTrack = this.loadTrack.bind(this)
     this.uploadHandler = this.uploadHandler.bind(this)
   }
 
-  trackLoader (trackID) {
-    function loadEventHandler (event) {
-      const newTrack = this.state.library.find(track => {
-        return track.trackID === trackID
+  volumeUpLayer (event) {
+    const selectedSampleID = +event.target.value
+    const targetIdx = this.state.layers.findIndex(layer => {
+      return layer.sampleID === selectedSampleID
+    })
+    if (targetIdx > -1) {
+      const targetLayer = this.state.layers[targetIdx]
+      if (targetLayer.volume === 3) {
+        this.state.layers.splice(targetIdx, 1)
+      } else {
+        targetLayer.volume++
+      }
+    } else {
+      this.state.layers.push({
+        sampleID: selectedSampleID,
+        volume: 1
       })
-      newTrack.timesPlayed++
-      this.setState({current: newTrack})
-      this.refs.compose.importState(newTrack.title, newTrack.tags)
-      this.refs.player.togglePlay()
     }
-    return loadEventHandler.bind(this)
+    this.forceUpdate()
+  }
+
+  loadTrack (event) {
+    const selectedTrackID = +event.target.value
+    const selectedTrack = this.state.library.find(track => {
+      return track.trackID === selectedTrackID
+    })
+    selectedTrack.timesPlayed++
+    this.setState({
+      currentTrackID: selectedTrackID,
+      layers: update([], {$push: selectedTrack.layers})
+    })
+    console.log(this.state)
+    this.refs.compose.importState(selectedTrack.title, selectedTrack.tags)
+    this.refs.player.togglePlay()
   }
 
   uploadHandler (newData) {
     let maxID = -1
-    collection.forEach(track => maxID = Math.max(maxID, track.trackID))
+    this.state.library.forEach(track => maxID = Math.max(maxID, track.trackID))
     const newTrack = {
       trackID: maxID + 1,
-      composedBy: userID,
+      composedBy: this.state.userID,
       title: newData.title,
-      layers: this.state.current.layers,
+      layers: sortBy(this.state.layers, layer => -layer.volume),
       tags: newData.tags,
       timesPlayed: 0
     }
 
     this.state.library.push(newTrack)
-    this.setState({current: newTrack})
+    this.setState({currentTrackID: newTrack.trackID})
   }
 
   render () {
+    const currentTrack = this.state.library.find(track => {
+      return track.trackID === this.state.currentTrackID
+    }) || {title: '', tags: []}
+
     const playerProps = {
       ref: 'player',
-      title: this.state.current.title,
-      layers: this.state.current.layers,
+      title: currentTrack.title,
+      layers: this.state.layers,
       samples: [{}]
     }
 
     const composeProps = {
       ref: 'compose',
-      title: this.state.current.title,
-      composedBy: userID,
-      layers: this.state.current.layers,
-      tags: this.state.current.tags,
+      title: currentTrack.title,
+      composedBy: this.state.userID,
+      layers: this.state.layers,
+      tags: currentTrack.tags,
       uploadHandler: this.uploadHandler
     }
 
     const libraryProps = {
-      userID: userID,
+      userID: this.state.userID,
       collection: this.state.library,
-      trackLoader: this.trackLoader
+      loadTrack: this.loadTrack
+    }
+
+    const mixingRoomProps = {
+      layers: this.state.layers,
+      volumeUp: this.volumeUpLayer
     }
 
     return (
@@ -119,6 +146,7 @@ export default class Main extends React.Component {
         <Player {...playerProps} />
         <Compose {...composeProps} />
         <Library {...libraryProps} />
+        <MixingRoom {...mixingRoomProps} />
       </div>
     )
   }

@@ -6,7 +6,7 @@ export default class Compose extends React.Component {
   static propTypes = {
     composedBy: React.PropTypes.string.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      layerID: React.PropTypes.number.isRequired,
+      sampleID: React.PropTypes.number.isRequired,
       volume: React.PropTypes.number.isRequired
     })).isRequired,
     uploadHandler: React.PropTypes.func.isRequired
@@ -79,7 +79,12 @@ export default class Compose extends React.Component {
     }
 
     const layersChosen = this.props.layers.map((layer, idx) => {
-      return <SoundBubble key={idx} size={1} {...layer} />
+      const bubbleProps = Object.assign(layer, {
+        key: idx,
+        size: 1,
+        active: false
+      })
+      return <SoundBubble {...bubbleProps} />
     })
     const tagList = []
     tagNames.map((tag, idx) => {
@@ -96,7 +101,7 @@ export default class Compose extends React.Component {
       <div>
         <h2>Great work!</h2>
         <h3>Here's your track</h3>
-        <ul>{layersChosen}</ul>
+        <div>{layersChosen}</div>
         <h3>One more step</h3>
         <label>Title:<input {...titleInputProps} /></label>
         <label>Composed by:<input {...composedByProps} /></label>

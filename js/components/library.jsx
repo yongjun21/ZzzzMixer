@@ -1,6 +1,6 @@
 import React from 'react'
-import {tagNames} from '../constants/AppConstants'
 import SoundBubble from './bubble'
+import {tagNames} from '../constants/AppConstants'
 import sortBy from 'lodash.sortby'
 
 export default class Library extends React.Component {
@@ -11,13 +11,13 @@ export default class Library extends React.Component {
       title: React.PropTypes.string.isRequired,
       composedBy: React.PropTypes.string.isRequired,
       layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-        layerID: React.PropTypes.number.isRequired,
+        sampleID: React.PropTypes.number.isRequired,
         volume: React.PropTypes.number.isRequired
       })).isRequired,
       tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       timesPlayed: React.PropTypes.number.isRequired
     })).isRequired,
-    trackLoader: React.PropTypes.func.isRequired
+    loadTrack: React.PropTypes.func.isRequired
   };
 
   constructor (props) {
@@ -51,7 +51,8 @@ export default class Library extends React.Component {
       onChange: this.selectTagFilter
     }
 
-    const tagsDropdown = ['--None--'].concat(tagNames).map((tag, idx) => <option key={idx} >{tag}</option>)
+    const tagsDropdown = ['--None--'].concat(tagNames)
+      .map((tag, idx) => <option key={idx} >{tag}</option>)
 
     let filteredCollection = (this.state.byMe && this.props.userID !== 'Anon')
       ? this.props.collection.filter(track => track.composedBy === this.props.userID)
@@ -63,7 +64,7 @@ export default class Library extends React.Component {
     }
     filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
-      return <TrackInfo key={idx} {...trackInfo} trackLoader={this.props.trackLoader} />
+      return <TrackInfo key={idx} {...trackInfo} loadTrack={this.props.loadTrack} />
     })
 
     return (
@@ -83,31 +84,41 @@ class TrackInfo extends React.Component {
     title: React.PropTypes.string.isRequired,
     composedBy: React.PropTypes.string.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      layerID: React.PropTypes.number.isRequired,
+      sampleID: React.PropTypes.number.isRequired,
       volume: React.PropTypes.number.isRequired
     })).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
-    trackLoader: React.PropTypes.func.isRequired
+    loadTrack: React.PropTypes.func.isRequired
   };
 
   render () {
     const layerSet = this.props.layers.map((layer, idx) => {
-      return <SoundBubble key={idx} size={1} {...layer} />
+      const bubbleProps = Object.assign(layer, {
+        key: idx,
+        size: 1,
+        active: false
+      })
+      return <SoundBubble {...bubbleProps} />
     })
 
     const tagSet = this.props.tags.map((tag, idx) => {
       return <span key={idx}>{tag}</span>
     })
 
+    const buttonProps = {
+      value: this.props.trackID,
+      onClick: this.props.loadTrack
+    }
+
     return (
       <li>
         <h3>{this.props.title}</h3>
         <h6>{'Composed by: ' + this.props.composedBy}</h6>
-        <ul>{layerSet}</ul>
+        <div>{layerSet}</div>
         <label>Tags:{tagSet}</label>
         <h3>{this.props.timesPlayed}</h3>
-        <button onClick={this.props.trackLoader(this.props.trackID)}>Listen</button>
+        <button {...buttonProps}>Listen</button>
       </li>
     )
   }

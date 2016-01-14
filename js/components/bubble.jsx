@@ -1,18 +1,32 @@
 import React from 'react'
+import {sampleNames} from '../constants/AppConstants'
 
 export default class SoundBubble extends React.Component {
   static propTypes = {
-    layerID: React.PropTypes.number.isRequired,
+    sampleID: React.PropTypes.number.isRequired,
     volume: React.PropTypes.number.isRequired,
-    size: React.PropTypes.number.isRequired
+    size: React.PropTypes.number.isRequired,
+    active: React.PropTypes.bool.isRequired,
+    volumeUp: React.PropTypes.func
   };
 
   render () {
+    const sample = sampleNames[this.props.sampleID]
+    const iconUrl = '/assets/icons/' + sample.replace(' ', '').toLowerCase()
+    const scaleFactor = this.props.size * (1 + 0 * this.props.volume)
+
+    const buttonProps = {
+      style: {
+        backgroundImage: 'url(' + iconUrl + ')',
+        transform: 'scale(' + scaleFactor + ')'
+      },
+      value: this.props.sampleID,
+      disabled: !this.props.active,
+      onClick: this.props.volumeUp
+    }
+
     return (
-      <li>
-        <h6>Track {this.props.layerID}</h6>
-        <h6>Volume: {this.props.volume}</h6>
-      </li>
+      <button {...buttonProps}>{sample}</button>
     )
   }
 }

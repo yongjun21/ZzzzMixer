@@ -5,7 +5,7 @@ export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      layerID: React.PropTypes.number.isRequired,
+      sampleID: React.PropTypes.number.isRequired,
       volume: React.PropTypes.number.isRequired
     })).isRequired,
     samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired

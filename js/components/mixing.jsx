@@ -1,114 +1,70 @@
-/* globals Audio */
-
 import React from 'react'
+import SoundBubble from './bubble'
+import {sampleNames, bubbleSizes} from '../constants/AppConstants'
+import partition from 'lodash.partition'
 
-import classNames from 'classnames'
-
-import './mixing.styl'
-
-export default class Mixing extends React.Component {
-  static propTypes = {
-    tracks: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
-    samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+function shuffledList (size) {
+  const original = []
+  const shuffled = []
+  for (let i = 0; i < size; i++) original.push(i)
+  for (let i = size; i > 0; i--) {
+    shuffled.push(original.splice(Math.floor(Math.random() * i), 1)[0])
   }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      samplenames: ['cafe', 'fire', 'jungle', 'rain', 'river', 'seawaves', 'wind']
-    }
-  }
-
-  render () {
-    return (
-      <section className='Mixing-section'>
-        {this.state.samplenames.map((name, idx) => {
-          return <Bubble label={name} key={idx}/>
-        })
-        }
-      </section>
-    )
-  }
+  return shuffled
 }
 
-class Bubble extends React.Component {
+export default class MixingRoom extends React.Component {
   static propTypes = {
-    label: React.PropTypes.string.isRequired
+    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      sampleID: React.PropTypes.number.isRequired,
+      volume: React.PropTypes.number.isRequired
+    })).isRequired,
+    volumeUp: React.PropTypes.func.isRequired
   };
 
   constructor (props) {
     super(props)
     this.state = {
-      selected: false,
-      bubbleSize: 1
+      outer: shuffledList(sampleNames.length),
+      inner: shuffledList(bubbleSizes.length)
     }
+    this.shuffleBubbles = this.shuffleBubbles.bind(this)
   }
 
-  handleClick (e) {
-    // To implement trackNum, volume
-//  tracksChosen = this.props.tracks.map((track, idx) => {
-//    return <TrackBubble key={idx} trackNum={track.trackNum} volume={track.volume} size={1} />
-//  })
-    if (!this.state.selected) {
-      this.setState({selected: true})
-      this.playSound('open')
-    } else if (this.state.bubbleSize === 3) {
-      // Set bubbleSize to 0 then 1 to create a realistic shrinking effect on close
-      this.setState({
-        selected: false,
-        bubbleSize: 0
-      })
-      this.playSound('close')
-      setTimeout(() => { this.setState({bubbleSize: 1}) }, 200)
-    } else {
-      this.setState({bubbleSize: this.state.bubbleSize + 1})
-      this.playSound('volume')
-    }
-  }
-
-  playSound (type) {
-    const isSafari = (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1)
-    if (!isSafari) {
-      let audio
-      if (type === 'open') {
-        audio = new Audio('./ui-sounds/open-bubble.mp3')
-      } else if (type === 'volume') {
-        audio = new Audio('./ui-sounds/single-bubble.mp3')
-      } else if (type === 'close') {
-        audio = new Audio('./ui-sounds/close-bubble.mp3')
-      }
-      audio.play()
-    }
+  shuffleBubbles () {
+    this.setState({
+      outer: shuffledList(sampleNames.length),
+      inner: shuffledList(bubbleSizes.length)
+    })
   }
 
   render () {
-    const self = this
-
-    // let bubbleSize = this.state.bubbleSize
-
-    const bubbleClass = classNames({
-      'Mixing-bubble': true,
-      'Mixing-bubble-selected': self.state.selected,
-      // ['Mixing-bubble-${bubbleSize}']: this.state.selected && (this.state.bubbleSize > 1)
-      'Mixing-bubble-0': !this.state.selected && (this.state.bubbleSize === 0),
-      'Mixing-bubble-2': this.state.selected && (this.state.bubbleSize === 2),
-      'Mixing-bubble-3': this.state.selected && (this.state.bubbleSize === 3),
-      'Mixing-bubble-cafe': this.props.label === 'cafe',
-      'Mixing-bubble-fire': this.props.label === 'fire',
-      'Mixing-bubble-jungle': this.props.label === 'jungle',
-      'Mixing-bubble-rain': this.props.label === 'rain',
-      'Mixing-bubble-river': this.props.label === 'river',
-      'Mixing-bubble-seawaves': this.props.label === 'seawaves',
-      'Mixing-bubble-wind': this.props.label === 'wind'
+    let basket = partition(this.state.outer, idx => {
+      return this.props.layers.findIndex(layer => layer.sampleID === idx) > -1
+    })
+    basket[0] = basket[0].map(idx => {
+      return this.props.layers.find(layer => layer.sampleID === idx)
+    })
+    basket[1] = basket[1].map(idx => {
+      return {sampleID: idx, volume: 0}
+    })
+    basket = basket[0].concat(basket[1])
+    basket = this.state.inner.map(idx => basket[idx])
+    basket = basket.map((sample, idx) => {
+      const bubbleProps = Object.assign(sample, {
+        key: idx,
+        size: bubbleSizes[idx],
+        active: true,
+        volumeUp: this.props.volumeUp
+      })
+      return <SoundBubble {...bubbleProps}/>
     })
 
-    const bubbleProps = {
-
-    }
-
     return (
-      <div {...bubbleProps} className={bubbleClass} onClick={this.handleClick.bind(this)}>
-        <label>{ self.props.label }</label>
+      <div>
+        <h3>Be creative</h3>
+        <div>{basket}</div>
+        <button onClick={this.shuffleBubbles}>Shuffle</button>
       </div>
     )
   }
