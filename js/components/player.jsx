@@ -1,9 +1,13 @@
 import React from 'react'
+import classNames from 'classnames'
 
 export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    tracks: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      layerID: React.PropTypes.number.isRequired,
+      volume: React.PropTypes.number.isRequired
+    })).isRequired,
     samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   };
 
@@ -56,13 +60,13 @@ export default class Player extends React.Component {
 
   render () {
     const playButtonProps = {
-      className: this.state.playing ? 'highlight fa fa-play' : 'fa fa-play',
+      className: classNames('fa', 'fa-play', {highlight: this.state.playing}),
       disabled: this.state.playing,
       onClick: this.togglePlay
     }
 
     const pauseButtonProps = {
-      className: this.state.playing ? 'fa fa-pause' : 'highlight fa fa-pause',
+      className: classNames('fa', 'fa-pause', {highlight: !this.state.playing}),
       disabled: !this.state.playing,
       onClick: this.togglePause
     }
@@ -87,7 +91,7 @@ export default class Player extends React.Component {
 
     return (
       <div>
-        <h3>{this.props.title}</h3>
+        <h3>{this.props.title || 'Untitled'}</h3>
         <button {...playButtonProps} />
         <button {...pauseButtonProps} />
         <input {...volumeControlProps} />
