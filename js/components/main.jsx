@@ -43,15 +43,11 @@ const collection = [
 ]
 
 function newTrack () {
-  let maxID = -1
-  collection.forEach(track => maxID = Math.max(maxID, track.trackID))
   return {
-    trackID: maxID + 1,
     title: '',
     composedBy: userID,
     layers: [],
-    tags: [],
-    timesPlayed: 0
+    tags: []
   }
 }
 
@@ -59,43 +55,56 @@ export default class Main extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentTrack: newTrack(),
+      current: newTrack(),
       library: collection
     }
-    console.log(this.state)
     this.trackLoader = this.trackLoader.bind(this)
     this.uploadHandler = this.uploadHandler.bind(this)
   }
 
   trackLoader (trackID) {
-    function loadHandler (event) {
-      this.setState({
-        currentTrack: this.state.library.find(track => {
-          return track.trackID === trackID
-        })
+    function loadEventHandler (event) {
+      const newTrack = this.state.library.find(track => {
+        return track.trackID === trackID
       })
+      newTrack.timesPlayed++
+      this.setState({current: newTrack})
+      this.refs.compose.importState(newTrack.title, newTrack.tags)
+      this.refs.player.togglePlay()
     }
-    return loadHandler.bind(this)
+    return loadEventHandler.bind(this)
   }
 
   uploadHandler (newData) {
-    Object.assign(this.state.currentTrack, newData)
-    this.state.library.push(this.state.currentTrack)
-    this.forceUpdate()
+    let maxID = -1
+    collection.forEach(track => maxID = Math.max(maxID, track.trackID))
+    const newTrack = {
+      trackID: maxID + 1,
+      composedBy: userID,
+      title: newData.title,
+      layers: this.state.current.layers,
+      tags: newData.tags,
+      timesPlayed: 0
+    }
+
+    this.state.library.push(newTrack)
+    this.setState({current: newTrack})
   }
 
   render () {
     const playerProps = {
-      title: this.state.currentTrack.title,
-      layers: this.state.currentTrack.layers,
+      ref: 'player',
+      title: this.state.current.title,
+      layers: this.state.current.layers,
       samples: [{}]
     }
 
     const composeProps = {
-      title: this.state.currentTrack.title,
+      ref: 'compose',
+      title: this.state.current.title,
       composedBy: userID,
-      layers: this.state.currentTrack.layers,
-      tags: this.state.currentTrack.tags,
+      layers: this.state.current.layers,
+      tags: this.state.current.tags,
       uploadHandler: this.uploadHandler
     }
 

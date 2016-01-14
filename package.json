@@ -29,6 +29,7 @@
     "classnames": "^2.2.3",
     "flux": "^2.1.1",
     "http-server": "^0.8.5",
+    "lodash.sortby": "^4.0.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "webpack": "^1.12.10",

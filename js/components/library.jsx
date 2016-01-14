@@ -1,6 +1,7 @@
 import React from 'react'
 import {tagNames} from '../constants/AppConstants'
 import SoundBubble from './bubble'
+import sortBy from 'lodash.sortby'
 
 export default class Library extends React.Component {
   static propTypes = {
@@ -60,6 +61,7 @@ export default class Library extends React.Component {
         return track.tags.indexOf(tagNames[this.state.tagFilter - 1]) > -1
       })
     }
+    filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
       return <TrackInfo key={idx} {...trackInfo} trackLoader={this.props.trackLoader} />
     })

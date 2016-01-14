@@ -25,11 +25,11 @@ export default class Player extends React.Component {
     this.startCountdown = this.startCountdown.bind(this)
   }
 
-  togglePlay (event) {
+  togglePlay () {
     this.setState({playing: true})
   }
 
-  togglePause (event) {
+  togglePause () {
     this.setState({playing: false})
   }
 

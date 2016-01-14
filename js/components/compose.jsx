@@ -4,13 +4,11 @@ import {tagNames} from '../constants/AppConstants'
 
 export default class Compose extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string.isRequired,
     composedBy: React.PropTypes.string.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.shape({
       layerID: React.PropTypes.number.isRequired,
       volume: React.PropTypes.number.isRequired
     })).isRequired,
-    tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     uploadHandler: React.PropTypes.func.isRequired
   };
 
@@ -18,16 +16,27 @@ export default class Compose extends React.Component {
     super(props)
 
     const tagState = {}
-    tagNames.forEach(tag => tagState[tag] = this.props.tags.indexOf(tag) > -1)
+    tagNames.forEach(tag => tagState[tag] = false)
 
     this.state = {
-      title: this.props.title,
+      title: '',
       tagState: tagState
     }
 
+    this.importState = this.importState.bind(this)
     this.changeTitle = this.changeTitle.bind(this)
     this.toggleTag = this.toggleTag.bind(this)
     this.uploadData = this.uploadData.bind(this)
+  }
+
+  importState (title, tags) {
+    const tagState = {}
+    tagNames.forEach(tag => tagState[tag] = tags.indexOf(tag) > -1)
+
+    this.setState({
+      title: title,
+      tagState: tagState
+    })
   }
 
   changeTitle (event) {
@@ -39,10 +48,11 @@ export default class Compose extends React.Component {
     this.forceUpdate()
   }
 
-  uploadData (event) {
+  uploadData () {
     const newData = {
       title: this.state.title,
-      tags: tagNames.filter(tag => this.state.tagState[tag])
+      tags: tagNames.filter(tag => this.state.tagState[tag]),
+      setState: this.setState
     }
     if (!newData.tags.length) newData.tags.push('No tag')
     this.props.uploadHandler(newData)
