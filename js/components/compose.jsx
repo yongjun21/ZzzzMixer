@@ -1,12 +1,13 @@
 import React from 'react'
-import TrackBubble from './bubble'
+import SoundBubble from './bubble'
+import {tagNames} from '../constants/AppConstants'
 
 export default class Compose extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     composedBy: React.PropTypes.string.isRequired,
-    tracks: React.PropTypes.arrayOf(React.PropTypes.shape({
-      trackNum: React.PropTypes.number.isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      layerID: React.PropTypes.number.isRequired,
       volume: React.PropTypes.number.isRequired
     })).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -16,17 +17,8 @@ export default class Compose extends React.Component {
   constructor (props) {
     super(props)
 
-    const tagState = {
-      'Nature': false,
-      'Urban': false,
-      'Sea': false,
-      'Weather': false,
-      'Instrumental': false,
-      'Vocal': false,
-      'New age': false,
-      'White noise': false
-    }
-    this.props.tags.forEach(tag => tagState[tag] = true)
+    const tagState = {}
+    tagNames.forEach(tag => tagState[tag] = this.props.tags.indexOf(tag) > -1)
 
     this.state = {
       title: this.props.title,
@@ -43,25 +35,26 @@ export default class Compose extends React.Component {
   }
 
   toggleTag (event) {
-    // const tagState = this.state.tagState
     this.state.tagState[event.target.value] = event.target.checked
     this.forceUpdate()
   }
 
   uploadData (event) {
-    const dataPkg = {
+    const newData = {
       title: this.state.title,
-      tags: Object.keys(this.state.tagState).filter(tag => this.state.tagState[tag])
+      tags: tagNames.filter(tag => this.state.tagState[tag])
     }
-    this.props.uploadHandler(dataPkg)
+    if (!newData.tags.length) newData.tags.push('No tag')
+    this.props.uploadHandler(newData)
   }
 
   render () {
     const titleInputProps = {
       type: 'text',
       value: this.state.title,
-      placeholder: 'Give this mix a name',
+      placeholder: 'Give me a name',
       maxLength: 40,
+      required: true,
       onChange: this.changeTitle
     }
 
@@ -75,11 +68,11 @@ export default class Compose extends React.Component {
       onClick: this.uploadData
     }
 
-    const tracksChosen = this.props.tracks.map((track, idx) => {
-      return <TrackBubble key={idx} trackNum={track.trackNum} volume={track.volume} size={1} />
+    const layersChosen = this.props.layers.map((layer, idx) => {
+      return <SoundBubble key={idx} size={1} {...layer} />
     })
     const tagList = []
-    Object.keys(this.state.tagState).map((tag, idx) => {
+    tagNames.map((tag, idx) => {
       const checkboxProps = {
         type: 'checkbox',
         value: tag,
@@ -92,13 +85,13 @@ export default class Compose extends React.Component {
     return (
       <div>
         <h2>Great work!</h2>
-        <h3>Here's your remix</h3>
-        <div>{tracksChosen}</div>
+        <h3>Here's your track</h3>
+        <ul>{layersChosen}</ul>
         <h3>One more step</h3>
         <label>Title:<input {...titleInputProps} /></label>
         <label>Composed by:<input {...composedByProps} /></label>
         <label>Select tags:{tagList}</label>
-        <button {...submitButtonProps} >Publish</button>
+        <button {...submitButtonProps} >Add to library</button>
       </div>
     )
   }

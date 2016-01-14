@@ -12,8 +12,8 @@ export default class InitDB {
       title: String,
       composedBy: String,
       downloads: Number,
-      mix: [{
-        trackNumber: Number,
+      layers: [{
+        layerID: Number,
         volume: Number
       }],
       tags: [String],

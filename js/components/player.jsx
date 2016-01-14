@@ -4,9 +4,9 @@ import classNames from 'classnames'
 export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    tracks: React.PropTypes.arrayOf(React.PropTypes.shape({
-      trackNum: React.PropTypes.number,
-      volume: React.PropTypes.number
+    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      layerID: React.PropTypes.number.isRequired,
+      volume: React.PropTypes.number.isRequired
     })).isRequired,
     samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   };
@@ -54,7 +54,7 @@ export default class Player extends React.Component {
     }
     this.setState({
       timer: window.setInterval(intervalCallback.bind(this), 1000),
-      countdown: 900
+      countdown: 10
     })
   }
 
