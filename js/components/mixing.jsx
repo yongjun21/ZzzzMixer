@@ -7,10 +7,10 @@ import classNames from 'classnames'
 import './mixing.styl'
 
 export default class Mixing extends React.Component {
-  // static propTypes = {
-  //   tracks: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
-  //   samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
-  // }
+  static propTypes = {
+    tracks: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  }
 
   constructor (props) {
     super(props)
@@ -45,6 +45,10 @@ class Bubble extends React.Component {
   }
 
   handleClick (e) {
+    // To implement trackNum, volume
+//  tracksChosen = this.props.tracks.map((track, idx) => {
+//    return <TrackBubble key={idx} trackNum={track.trackNum} volume={track.volume} size={1} />
+//  })
     if (!this.state.selected) {
       this.setState({selected: true})
       this.playSound('open')
@@ -84,8 +88,8 @@ class Bubble extends React.Component {
 
     const bubbleClass = classNames({
       'Mixing-bubble': true,
-      'Mixing-bubble-selected': this.state.selected,
-      // ['Mixing-bubble-${buttonSize}']: this.state.selected && (this.state.bubbleSize > 1)
+      'Mixing-bubble-selected': self.state.selected,
+      // ['Mixing-bubble-${bubbleSize}']: this.state.selected && (this.state.bubbleSize > 1)
       'Mixing-bubble-0': !this.state.selected && (this.state.bubbleSize === 0),
       'Mixing-bubble-2': this.state.selected && (this.state.bubbleSize === 2),
       'Mixing-bubble-3': this.state.selected && (this.state.bubbleSize === 3),
@@ -95,7 +99,7 @@ class Bubble extends React.Component {
       'Mixing-bubble-rain': this.props.label === 'rain',
       'Mixing-bubble-river': this.props.label === 'river',
       'Mixing-bubble-seawaves': this.props.label === 'seawaves',
-      'Mixing-bubble-wind': this.props.label === 'wind',
+      'Mixing-bubble-wind': this.props.label === 'wind'
     })
 
     const bubbleProps = {
