@@ -11,33 +11,21 @@ const collection = [
     trackID: 1,
     title: 'Hello',
     composedBy: 'Anon',
-    layers: [
-      {sampleID: 1, volume: 3},
-      {sampleID: 2, volume: 3},
-      {sampleID: 3, volume: 3}
-    ],
+    layers: [0, 3, 3, 3, 0, 0, 0, 0, 0, 0],
     tags: ['Nature', 'Sea'],
     timesPlayed: 10
   }, {
     trackID: 2,
     title: 'World',
     composedBy: 'yongjun21',
-    layers: [
-      {sampleID: 1, volume: 2},
-      {sampleID: 3, volume: 3},
-      {sampleID: 5, volume: 4}
-    ],
+    layers: [0, 2, 0, 3, 0, 4, 0, 0, 0, 0],
     tags: ['New age'],
     timesPlayed: 99
   }, {
     trackID: 3,
     title: 'Happy birthday',
     composedBy: 'Jared Tong',
-    layers: [
-      {sampleID: 7, volume: 1},
-      {sampleID: 8, volume: 1},
-      {sampleID: 9, volume: 1}
-    ],
+    layers: [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     tags: ['Urban', 'White noise'],
     timesPlayed: 99
   }
@@ -49,7 +37,7 @@ export default class Main extends React.Component {
     this.state = {
       userID: 'Jared Tong',
       currentTrackID: -1,
-      layers: [],
+      layers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       library: collection
     }
     this.volumeUpLayer = this.volumeUpLayer.bind(this)
@@ -59,21 +47,11 @@ export default class Main extends React.Component {
 
   volumeUpLayer (event) {
     const selectedSampleID = +event.target.value
-    const targetIdx = this.state.layers.findIndex(layer => {
-      return layer.sampleID === selectedSampleID
-    })
-    if (targetIdx > -1) {
-      const targetLayer = this.state.layers[targetIdx]
-      if (targetLayer.volume === 3) {
-        this.state.layers.splice(targetIdx, 1)
-      } else {
-        targetLayer.volume++
-      }
+    console.log(this.state.layers[selectedSampleID])
+    if (this.state.layers[selectedSampleID] === 4) {
+      this.state.layers[selectedSampleID] = 0
     } else {
-      this.state.layers.push({
-        sampleID: selectedSampleID,
-        volume: 1
-      })
+      this.state.layers[selectedSampleID]++
     }
     this.forceUpdate()
   }

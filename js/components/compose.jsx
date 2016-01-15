@@ -5,10 +5,7 @@ import {tagNames} from '../constants/AppConstants'
 export default class Compose extends React.Component {
   static propTypes = {
     composedBy: React.PropTypes.string.isRequired,
-    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      sampleID: React.PropTypes.number.isRequired,
-      volume: React.PropTypes.number.isRequired
-    })).isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     uploadHandler: React.PropTypes.func.isRequired
   };
 
@@ -78,14 +75,20 @@ export default class Compose extends React.Component {
       onClick: this.uploadData
     }
 
-    const layersChosen = this.props.layers.map((layer, idx) => {
-      const bubbleProps = Object.assign(layer, {
-        key: idx,
-        size: 1,
-        active: false
+    const layersChosen = this.props.layers
+      .map((volume, idx) => {
+        return {
+          sampleID: idx,
+          volume: volume,
+          size: 1,
+          active: false
+        }
       })
-      return <SoundBubble {...bubbleProps} />
-    })
+      .filter(props => props.volume > 0)
+      .map(props => {
+        return <SoundBubble key={props.sampleID} {...props} />
+      })
+
     const tagList = []
     tagNames.map((tag, idx) => {
       const checkboxProps = {

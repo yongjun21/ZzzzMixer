@@ -15,10 +15,7 @@ function shuffledList (size) {
 
 export default class MixingRoom extends React.Component {
   static propTypes = {
-    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      sampleID: React.PropTypes.number.isRequired,
-      volume: React.PropTypes.number.isRequired
-    })).isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     volumeUp: React.PropTypes.func.isRequired
   };
 
@@ -39,25 +36,18 @@ export default class MixingRoom extends React.Component {
   }
 
   render () {
-    let basket = partition(this.state.outer, idx => {
-      return this.props.layers.findIndex(layer => layer.sampleID === idx) > -1
-    })
-    basket[0] = basket[0].map(idx => {
-      return this.props.layers.find(layer => layer.sampleID === idx)
-    })
-    basket[1] = basket[1].map(idx => {
-      return {sampleID: idx, volume: 0}
-    })
+    let basket = partition(this.state.outer, idx => this.props.layers[idx] > 0)
     basket = basket[0].concat(basket[1])
     basket = this.state.inner.map(idx => basket[idx])
-    basket = basket.map((sample, idx) => {
-      const bubbleProps = Object.assign(sample, {
-        key: idx,
+    basket = basket.map((sampleID, idx) => {
+      const bubbleProps = {
+        sampleID: sampleID,
+        volume: this.props.layers[sampleID],
         size: bubbleSizes[idx],
         active: true,
         volumeUp: this.props.volumeUp
-      })
-      return <SoundBubble {...bubbleProps}/>
+      }
+      return <SoundBubble key={sampleID} {...bubbleProps}/>
     })
 
     return (

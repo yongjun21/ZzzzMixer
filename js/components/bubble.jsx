@@ -26,7 +26,7 @@ export default class SoundBubble extends React.Component {
     }
 
     return (
-      <button {...buttonProps}>{sample}</button>
+      <button {...buttonProps}>{sample + ': ' + this.props.volume}</button>
     )
   }
 }

@@ -10,10 +10,7 @@ export default class Library extends React.Component {
       trackID: React.PropTypes.number.isRequired,
       title: React.PropTypes.string.isRequired,
       composedBy: React.PropTypes.string.isRequired,
-      layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-        sampleID: React.PropTypes.number.isRequired,
-        volume: React.PropTypes.number.isRequired
-      })).isRequired,
+      layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
       tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       timesPlayed: React.PropTypes.number.isRequired
     })).isRequired,
@@ -83,24 +80,26 @@ class TrackInfo extends React.Component {
     trackID: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
     composedBy: React.PropTypes.string.isRequired,
-    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      sampleID: React.PropTypes.number.isRequired,
-      volume: React.PropTypes.number.isRequired
-    })).isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
     loadTrack: React.PropTypes.func.isRequired
   };
 
   render () {
-    const layerSet = this.props.layers.map((layer, idx) => {
-      const bubbleProps = Object.assign(layer, {
-        key: idx,
-        size: 1,
-        active: false
+    const layerSet = this.props.layers
+      .map((volume, idx) => {
+        return {
+          sampleID: idx,
+          volume: volume,
+          size: 1,
+          active: false
+        }
       })
-      return <SoundBubble {...bubbleProps} />
-    })
+      .filter(props => props.volume > 0)
+      .map(props => {
+        return <SoundBubble key={props.sampleID} {...props} />
+      })
 
     const tagSet = this.props.tags.map((tag, idx) => {
       return <span key={idx}>{tag}</span>

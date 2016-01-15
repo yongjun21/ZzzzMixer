@@ -4,10 +4,7 @@ import classNames from 'classnames'
 export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    layers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      sampleID: React.PropTypes.number.isRequired,
-      volume: React.PropTypes.number.isRequired
-    })).isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   };
 
