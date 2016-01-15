@@ -1,5 +1,5 @@
 import React from 'react'
-import {sampleNames} from '../constants/AppConstants'
+import {sampleNames, sampleFileNames} from '../constants/AppConstants'
 
 export default class SoundBubble extends React.Component {
   static propTypes = {
@@ -12,7 +12,7 @@ export default class SoundBubble extends React.Component {
 
   render () {
     const sample = sampleNames[this.props.sampleID]
-    const iconUrl = '/assets/icons/' + sample.replace(' ', '').toLowerCase()
+    const iconUrl = '/assets/icons/' + sampleFileNames[this.props.sampleID] + 'jpg'
     const scaleFactor = this.props.size * (1 + 0 * this.props.volume)
 
     const buttonProps = {

@@ -22,4 +22,17 @@ export const sampleNames = [
   'White noise'
 ]
 
+export const sampleFileNames = [
+  'rain',
+  'thunder',
+  'waves',
+  'wind',
+  'fire',
+  'birds',
+  'crickets',
+  'coffeeshop',
+  'singingbowl',
+  'whitenoise'
+]
+
 export const bubbleSizes = [1, 1, 1, 1, 1, 1, 1]

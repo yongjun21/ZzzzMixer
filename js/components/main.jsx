@@ -3,8 +3,6 @@ import Player from './player'
 import Compose from './compose'
 import Library from './library'
 import MixingRoom from './mixing'
-import update from 'react-addons-update'
-import sortBy from 'lodash.sortby'
 
 const collection = [
   {
@@ -37,7 +35,7 @@ export default class Main extends React.Component {
     this.state = {
       userID: 'Jared Tong',
       currentTrackID: -1,
-      layers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      layers: Array(10).fill(0),
       library: collection
     }
     this.volumeUpLayer = this.volumeUpLayer.bind(this)
@@ -47,7 +45,6 @@ export default class Main extends React.Component {
 
   volumeUpLayer (event) {
     const selectedSampleID = +event.target.value
-    console.log(this.state.layers[selectedSampleID])
     if (this.state.layers[selectedSampleID] === 4) {
       this.state.layers[selectedSampleID] = 0
     } else {
@@ -64,9 +61,8 @@ export default class Main extends React.Component {
     selectedTrack.timesPlayed++
     this.setState({
       currentTrackID: selectedTrackID,
-      layers: update([], {$push: selectedTrack.layers})
+      layers: Array.from(selectedTrack.layers)
     })
-    console.log(this.state)
     this.refs.compose.importState(selectedTrack.title, selectedTrack.tags)
     this.refs.player.togglePlay()
   }
@@ -78,7 +74,7 @@ export default class Main extends React.Component {
       trackID: maxID + 1,
       composedBy: this.state.userID,
       title: newData.title,
-      layers: sortBy(this.state.layers, layer => -layer.volume),
+      layers: this.state.layers,
       tags: newData.tags,
       timesPlayed: 0
     }
@@ -95,8 +91,7 @@ export default class Main extends React.Component {
     const playerProps = {
       ref: 'player',
       title: currentTrack.title,
-      layers: this.state.layers,
-      samples: [{}]
+      layers: this.state.layers
     }
 
     const composeProps = {

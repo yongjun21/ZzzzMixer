@@ -1,37 +1,30 @@
 import React from 'react'
 import classNames from 'classnames'
+import {sampleFileNames} from '../constants/AppConstants'
+import Howler from 'howler'
+
+const soundLibrary = Array(10).fill(null)
+let lastPlayingState = false
 
 export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
-    samples: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired
   };
 
   constructor (props) {
     super(props)
     this.state = {
       playing: false,
-      volume: 5,
       timer: 0,
       countdown: 0
     }
     this.togglePlay = this.togglePlay.bind(this)
-    this.togglePause = this.togglePause.bind(this)
-    this.setVolume = this.setVolume.bind(this)
     this.startCountdown = this.startCountdown.bind(this)
   }
 
   togglePlay () {
-    this.setState({playing: true})
-  }
-
-  togglePause () {
-    this.setState({playing: false})
-  }
-
-  setVolume (event) {
-    this.setState({volume: event.target.value})
+    this.setState({playing: !this.state.playing})
   }
 
   startCountdown () {
@@ -56,26 +49,36 @@ export default class Player extends React.Component {
   }
 
   render () {
+    this.props.layers.forEach((layer, idx) => {
+      if (layer > 0) {
+        if (soundLibrary[idx]) {
+          soundLibrary[idx].volume(0.2 * layer)
+          if (this.state.playing && !lastPlayingState) soundLibrary[idx].play()
+          else if (!this.state.playing && lastPlayingState) soundLibrary[idx].pause()
+        } else {
+          soundLibrary[idx] = new Howler.Howl({
+            urls: ['../../assets/audio/' + sampleFileNames[idx] + '.mp4'],
+            loop: true,
+            volume: 0.2 * layer
+          })
+          if (this.state.playing) soundLibrary[idx].play()
+        }
+      } else {
+        if (soundLibrary[idx]) {
+          soundLibrary[idx].unload()
+          soundLibrary[idx] = null
+        }
+      }
+    })
+
+    lastPlayingState = this.state.playing
+
     const playButtonProps = {
-      className: classNames('fa', 'fa-play', {highlight: this.state.playing}),
-      disabled: this.state.playing,
+      className: classNames('fa', {
+        'fa-play': !this.state.playing,
+        'fa-pause': this.state.playing
+      }),
       onClick: this.togglePlay
-    }
-
-    const pauseButtonProps = {
-      className: classNames('fa', 'fa-pause', {highlight: !this.state.playing}),
-      disabled: !this.state.playing,
-      onClick: this.togglePause
-    }
-
-    const volumeControlProps = {
-      type: 'range',
-      className: 'volume-slider',
-      min: 1,
-      max: 10,
-      step: 1,
-      value: this.state.volume,
-      onChange: this.setVolume
     }
 
     const timerProps = {
@@ -90,8 +93,6 @@ export default class Player extends React.Component {
       <div>
         <h3>{this.props.title || 'Untitled'}</h3>
         <button {...playButtonProps} />
-        <button {...pauseButtonProps} />
-        <input {...volumeControlProps} />
         <button {...timerProps} >{timerDisplay}</button>
       </div>
     )
