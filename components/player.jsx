@@ -9,34 +9,30 @@ let lastPlayingState = false
 export default class Player extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired
+    playing: React.PropTypes.bool.isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    togglePlay: React.PropTypes.func.isRequired
   };
 
   constructor (props) {
     super(props)
     this.state = {
-      playing: false,
       timer: 0,
       countdown: 0
     }
-    this.togglePlay = this.togglePlay.bind(this)
     this.startCountdown = this.startCountdown.bind(this)
-  }
-
-  togglePlay () {
-    this.setState({playing: !this.state.playing})
   }
 
   startCountdown () {
     if (this.state.timer) window.clearInterval(this.state.timer)
     function intervalCallback () {
-      if (!this.state.playing) return
+      if (!this.props.playing) return
       if (this.state.countdown > 0) {
         this.setState({countdown: this.state.countdown - 1})
       } else {
         window.clearInterval(this.state.timer)
+        this.props.togglePlay()
         this.setState({
-          playing: false,
           timer: 0,
           countdown: 0
         })
@@ -53,15 +49,15 @@ export default class Player extends React.Component {
       if (layer > 0) {
         if (soundLibrary[idx]) {
           soundLibrary[idx].volume(0.2 * layer)
-          if (this.state.playing && !lastPlayingState) soundLibrary[idx].play()
-          else if (!this.state.playing && lastPlayingState) soundLibrary[idx].pause()
+          if (this.props.playing && !lastPlayingState) soundLibrary[idx].play()
+          else if (!this.props.playing && lastPlayingState) soundLibrary[idx].pause()
         } else {
           soundLibrary[idx] = new Howler.Howl({
             urls: ['../../assets/audio/' + sampleFileNames[idx] + '.mp4'],
             loop: true,
             volume: 0.3 * layer
           })
-          if (this.state.playing) soundLibrary[idx].play()
+          if (this.props.playing) soundLibrary[idx].play()
         }
       } else {
         if (soundLibrary[idx]) {
@@ -71,14 +67,14 @@ export default class Player extends React.Component {
       }
     })
 
-    lastPlayingState = this.state.playing
+    lastPlayingState = this.props.playing
 
     const playButtonProps = {
       className: classNames('fa', {
-        'fa-play': !this.state.playing,
-        'fa-pause': this.state.playing
+        'fa-play': !this.props.playing,
+        'fa-pause': this.props.playing
       }),
-      onClick: this.togglePlay
+      onClick: this.props.togglePlay
     }
 
     const timerProps = {

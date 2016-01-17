@@ -11,13 +11,19 @@ class Main extends React.Component {
     this.state = {
       userID: 'Jared Tong',
       currentTrackID: -1,
+      playing: true,
       layers: Array(10).fill(0),
       library: []
     }
+    this.togglePlay = this.togglePlay.bind(this)
     this.volumeUpLayer = this.volumeUpLayer.bind(this)
     this.loadTrack = this.loadTrack.bind(this)
     this.deleteTrack = this.deleteTrack.bind(this)
     this.uploadHandler = this.uploadHandler.bind(this)
+  }
+
+  togglePlay () {
+    this.setState({playing: !this.state.playing})
   }
 
   volumeUpLayer (event) {
@@ -38,10 +44,10 @@ class Main extends React.Component {
     selectedTrack.timesPlayed++
     this.setState({
       currentTrackID: selectedTrackID,
+      playing: true,
       layers: Array.from(selectedTrack.layers)
     })
     this.refs.compose.importState(selectedTrack.title, selectedTrack.tags)
-    if (!this.refs.player.state.playing) this.refs.player.togglePlay()
   }
 
   deleteTrack (event) {
@@ -73,39 +79,26 @@ class Main extends React.Component {
       return track.trackID === this.state.currentTrackID
     }) || {title: '', tags: []}
 
-    const playerProps = {
-      ref: 'player',
-      title: currentTrack.title,
-      layers: this.state.layers
-    }
-
-    const composeProps = {
-      ref: 'compose',
-      title: currentTrack.title,
-      composedBy: this.state.userID,
-      layers: this.state.layers,
-      tags: currentTrack.tags,
-      uploadHandler: this.uploadHandler
-    }
-
-    const libraryProps = {
-      userID: this.state.userID,
-      collection: this.state.library,
-      loadTrack: this.loadTrack,
-      deleteTrack: this.deleteTrack
-    }
-
-    const mixingRoomProps = {
-      layers: this.state.layers,
-      volumeUp: this.volumeUpLayer
-    }
-
     return (
       <div>
-        <Player {...playerProps} />
-        <Compose {...composeProps} />
-        <Library {...libraryProps} />
-        <MixingRoom {...mixingRoomProps} />
+        <Player
+          title={currentTrack.title}
+          playing={this.state.playing}
+          layers={this.state.layers}
+          togglePlay={this.togglePlay} />
+        <Compose
+          ref='compose'
+          composedBy={this.state.userID}
+          layers={this.state.layers}
+          uploadHandler={this.uploadHandler} />
+        <Library
+          userID={this.state.userID}
+          collection={this.state.library}
+          loadTrack={this.loadTrack}
+          deleteTrack={this.deleteTrack} />
+        <MixingRoom
+          layers={this.state.layers}
+          volumeUp={this.volumeUpLayer} />
       </div>
     )
   }

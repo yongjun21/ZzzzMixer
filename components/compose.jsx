@@ -2,6 +2,8 @@ import React from 'react'
 import SoundBubble from './bubble'
 import {tagNames} from '../helpers/constants'
 
+const tagState = {}
+
 export default class Compose extends React.Component {
   static propTypes = {
     composedBy: React.PropTypes.string.isRequired,
@@ -12,7 +14,6 @@ export default class Compose extends React.Component {
   constructor (props) {
     super(props)
 
-    const tagState = {}
     tagNames.forEach(tag => tagState[tag] = false)
 
     this.state = {
@@ -27,9 +28,7 @@ export default class Compose extends React.Component {
   }
 
   importState (title, tags) {
-    const tagState = {}
     tagNames.forEach(tag => tagState[tag] = tags.indexOf(tag) > -1)
-
     this.setState({
       title: title,
       tagState: tagState
@@ -55,25 +54,6 @@ export default class Compose extends React.Component {
   }
 
   render () {
-    const titleInputProps = {
-      type: 'text',
-      value: this.state.title,
-      placeholder: 'Give me a name',
-      maxLength: 40,
-      required: true,
-      onChange: this.changeTitle
-    }
-
-    const composedByProps = {
-      type: 'text',
-      value: this.props.composedBy,
-      readOnly: true
-    }
-
-    const submitButtonProps = {
-      onClick: this.uploadData
-    }
-
     const layersChosen = this.props.layers
       .map((volume, idx) => {
         return {
@@ -105,10 +85,23 @@ export default class Compose extends React.Component {
         <h3>Here's your track</h3>
         <div>{layersChosen}</div>
         <h3>One more step</h3>
-        <label>Title:<input {...titleInputProps} /></label>
-        <label>Composed by:<input {...composedByProps} /></label>
+        <label>Title:
+          <input
+            type='text'
+            value={this.state.title}
+            placeholder='Give me a name'
+            maxLength={40}
+            required={true}
+            onChange={this.changeTitle} />
+        </label>
+        <label>Composed by:
+          <input
+            type='text'
+            value={this.props.composedBy}
+            readOnly={true} />
+        </label>
         <label>Select tags:{tagList}</label>
-        <button {...submitButtonProps} >Add to library</button>
+        <button onClick={this.uploadData} >Add to library</button>
       </div>
     )
   }

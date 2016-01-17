@@ -58,9 +58,13 @@ export default class Library extends React.Component {
     }
     filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
-      return <TrackInfo key={idx} {...trackInfo}
-        loadTrack={this.props.loadTrack}
-        deleteTrack={this.props.deleteTrack} />
+      return (
+        <TrackInfo
+          key={idx}
+          {...trackInfo}
+          loadTrack={this.props.loadTrack}
+          deleteTrack={this.props.deleteTrack} />
+      )
     })
 
     return (
