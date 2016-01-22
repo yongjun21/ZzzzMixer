@@ -1,5 +1,5 @@
 import React from 'react'
-import {sampleNames, sampleFileNames} from '../helpers/constants'
+import {sampleNames, sampleFileNames} from './helpers'
 
 export default class SoundBubble extends React.Component {
   static propTypes = {

@@ -1,16 +1,16 @@
 import React from 'react'
-import SoundBubble from './bubble'
-import {sampleNames, bubbleSizes} from '../helpers/constants'
-import {shuffledArr} from '../helpers/utils'
+import {Link} from 'react-router'
+import SoundBubble from '../bubble'
+import {shuffledArr, sampleNames, bubbleSizes} from '../helpers'
 import intersection from 'lodash.intersection'
 
 let basket = sampleNames.map((val, idx) => idx)
 let reserved = basket.splice(bubbleSizes.length)
 
-export default class MixingRoom extends React.Component {
+export default class Mixer extends React.Component {
   static propTypes = {
-    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
-    volumeUp: React.PropTypes.func.isRequired
+    layers: React.PropTypes.arrayOf(React.PropTypes.number),
+    volumeUp: React.PropTypes.func
   };
 
   constructor (props) {
@@ -45,21 +45,23 @@ export default class MixingRoom extends React.Component {
       reserved).length > 0) this.shuffleBasket()
     const renderBasket = basket.map((sampleID, idx) => {
       const bubbleProps = {
+        key: idx,
         sampleID: sampleID,
         volume: this.props.layers[sampleID],
         size: bubbleSizes[idx],
         active: true,
         volumeUp: this.props.volumeUp
       }
-      return <SoundBubble key={sampleID} {...bubbleProps}/>
+      return <SoundBubble {...bubbleProps}/>
     })
 
     return (
-      <div>
+      <section>
         <h3>Be creative</h3>
         <div>{renderBasket}</div>
         <button onClick={this.randomize}>Shuffle</button>
-      </div>
+        <Link to='/upload'>Upload</Link>
+      </section>
     )
   }
 }
