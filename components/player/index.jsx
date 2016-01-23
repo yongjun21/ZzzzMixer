@@ -8,10 +8,10 @@ let lastPlayingState = false
 
 export default class Player extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string,
-    playing: React.PropTypes.bool,
-    layers: React.PropTypes.arrayOf(React.PropTypes.number),
-    togglePlay: React.PropTypes.func
+    title: React.PropTypes.string.isRequired,
+    playing: React.PropTypes.bool.isRequired,
+    layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    togglePlay: React.PropTypes.func.isRequired
   };
 
   constructor (props) {

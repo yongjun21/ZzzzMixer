@@ -1,7 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {IndexLink, Link} from 'react-router'
 import Player from '../player'
-console.log(typeof Player)
 
 export default class Main extends React.Component {
   static propTypes = {
@@ -70,7 +69,7 @@ export default class Main extends React.Component {
       title: data.title,
       tags: data.tags
     })
-    this.props.history.pushState(null, '/compose')
+    this.props.history.popState()
   }
 
   render () {
@@ -83,7 +82,7 @@ export default class Main extends React.Component {
     return (
       <main>
         <header>
-          <Link to='/library'>Library</Link>
+          <IndexLink to='/library'>Library</IndexLink>
           <Link to='/compose'>Compose</Link>
         </header>
         {React.cloneElement(this.props.children, childrenProps)}

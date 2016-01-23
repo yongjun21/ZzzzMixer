@@ -56,6 +56,7 @@ export default class Library extends React.Component {
         <TrackInfo
           key={idx}
           {...trackInfo}
+          allowDelete={this.props.userID === trackInfo.composedBy}
           loadTrack={this.props.loadTrack}
           deleteTrack={this.deleteTrack} />
       )

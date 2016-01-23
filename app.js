@@ -5,10 +5,13 @@ import Library from './components/library'
 import Compose from './components/compose'
 import Mixer from './components/mixer'
 import Upload from './components/upload'
-import {Router, Route, IndexRoute, Redirect, browserHistory} from 'react-router'
+import {Router, Route, IndexRoute, Redirect} from 'react-router'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
+
+console.log(createBrowserHistory)
 
 ReactDOM.render((
-  <Router history={browserHistory}>
+  <Router history={createBrowserHistory()}>
     <Route path='library' component={Main}>
       <IndexRoute component={Library}/>
       <Route path='/compose' component={Compose}>

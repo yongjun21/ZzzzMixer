@@ -9,6 +9,7 @@ export default class TrackInfo extends React.Component {
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
+    allowDelete: React.PropTypes.bool.isRequired,
     loadTrack: React.PropTypes.func.isRequired,
     deleteTrack: React.PropTypes.func.isRequired
   };
@@ -32,6 +33,10 @@ export default class TrackInfo extends React.Component {
       return <span key={idx}>{tag}</span>
     })
 
+    const deleteButton = this.props.allowDelete
+      ? <button value={this.props.trackID} onClick={this.props.deleteTrack} >X</button>
+      : null
+
     return (
       <li>
         <h3>{this.props.title}</h3>
@@ -40,7 +45,7 @@ export default class TrackInfo extends React.Component {
         <label>Tags:{tagSet}</label>
         <h3>{this.props.timesPlayed}</h3>
         <button value={this.props.trackID} onClick={this.props.loadTrack} >Listen</button>
-        <button value={this.props.trackID} onClick={this.props.deleteTrack} >X</button>
+        {deleteButton}
       </li>
     )
   }
