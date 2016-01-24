@@ -53,7 +53,8 @@ export default class Player extends React.Component {
           else if (!this.props.playing && lastPlayingState) soundLibrary[idx].pause()
         } else {
           soundLibrary[idx] = new Howl({
-            urls: ['../../assets/audio/' + sampleFileNames[idx] + '.mp4'],
+            urls: ['sample/' + sampleFileNames[idx] + '.mp4'],
+            buffer: true,
             loop: true,
             volume: 0.3 * layer
           })

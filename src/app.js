@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Main from './components/main'
-import Library from './components/library'
-import Compose from './components/compose'
-import Mixer from './components/mixer'
-import Upload from './components/upload'
+import Main from '../components/main'
+import Library from '../components/library'
+import Compose from '../components/compose'
+import Mixer from '../components/mixer'
+import Upload from '../components/upload'
 import {Router, Route, IndexRoute, Redirect} from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
-
-console.log(createBrowserHistory)
 
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
@@ -20,5 +18,6 @@ ReactDOM.render((
       </Route>
     </Route>
     <Redirect from='/' to='library'/>
+    <Redirect from='/index.html' to='library'/>
   </Router>
 ), document.getElementById('main'))
