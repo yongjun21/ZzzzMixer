@@ -1,6 +1,7 @@
 import React from 'react'
 import {IndexLink, Link} from 'react-router'
 import Player from '../player'
+import {addToDB, updateDB, deleteFromDB, fetchDB} from '../helpers-db'
 
 export default class Main extends React.Component {
   static propTypes = {
@@ -15,13 +16,18 @@ export default class Main extends React.Component {
       title: '',
       tags: [],
       playing: true,
-      layers: Array(10).fill(0),
-      collection: []
+      layers: Array(10).fill(0)
     }
+    this.populateLibrary()
     this.togglePlay = this.togglePlay.bind(this)
     this.volumeUp = this.volumeUp.bind(this)
     this.loadTrack = this.loadTrack.bind(this)
+    this.deleteTrack = this.deleteTrack.bind(this)
     this.uploadHandler = this.uploadHandler.bind(this)
+  }
+
+  populateLibrary () {
+    fetchDB().then(collection => this.setState({collection: collection}))
   }
 
   togglePlay () {
@@ -39,24 +45,32 @@ export default class Main extends React.Component {
   }
 
   loadTrack (event) {
-    const selectedTrackID = +event.target.value
     const selectedTrack = this.state.collection.find(track => {
-      return track.trackID === selectedTrackID
+      return track._id === event.target.value
     })
     selectedTrack.timesPlayed++
-    this.setState({
-      title: selectedTrack.title,
-      tags: selectedTrack.tags,
-      playing: true,
-      layers: Array.from(selectedTrack.layers)
+    updateDB(selectedTrack).then(result => {
+      selectedTrack._rev = result.rev
+      this.setState({
+        title: selectedTrack.title,
+        tags: selectedTrack.tags,
+        playing: true,
+        layers: Array.from(selectedTrack.layers)
+      })
     })
   }
 
+  deleteTrack (event) {
+    const toRemove = this.state.collection.splice(
+      this.state.collection.findIndex(track => {
+        return track._id === event.target.value
+      }), 1)[0]
+    deleteFromDB(toRemove)
+    this.forceUpdate()
+  }
+
   uploadHandler (data) {
-    let maxID = -1
-    this.state.collection.forEach(track => maxID = Math.max(maxID, track.trackID))
     const newTrack = {
-      trackID: maxID + 1,
       composedBy: this.state.userID,
       title: data.title,
       tags: data.tags,
@@ -64,18 +78,24 @@ export default class Main extends React.Component {
       timesPlayed: 0
     }
 
-    this.state.collection.push(newTrack)
-    this.setState({
-      title: data.title,
-      tags: data.tags
+    addToDB(newTrack).then(result => {
+      newTrack._id = result.id
+      newTrack._rev = result.rev
+      this.setState({
+        title: data.title,
+        tags: data.tags,
+        collection: this.state.collection.concat(newTrack)
+      })
+
+      this.props.history.goBack()
     })
-    this.props.history.popState()
   }
 
   render () {
     const childrenProps = Object.assign(this.state, {
       volumeUp: this.volumeUp,
       loadTrack: this.loadTrack,
+      deleteTrack: this.deleteTrack,
       uploadHandler: this.uploadHandler
     })
 

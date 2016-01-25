@@ -77,7 +77,7 @@ export default class Upload extends React.Component {
         type: 'checkbox',
         value: tag,
         checked: this.state.tagState[tag],
-        onClick: this.toggleTag
+        onChange: this.toggleTag
       }
       tagList.push(<label key={idx} >{tag}<input {...checkboxProps} /></label>)
     })

@@ -3,7 +3,7 @@ import SoundBubble from '../bubble'
 
 export default class TrackInfo extends React.Component {
   static propTypes = {
-    trackID: React.PropTypes.number.isRequired,
+    _id: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     composedBy: React.PropTypes.string.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
@@ -34,7 +34,7 @@ export default class TrackInfo extends React.Component {
     })
 
     const deleteButton = this.props.allowDelete
-      ? <button value={this.props.trackID} onClick={this.props.deleteTrack} >X</button>
+      ? <button value={this.props._id} onClick={this.props.deleteTrack} >X</button>
       : null
 
     return (
@@ -44,7 +44,7 @@ export default class TrackInfo extends React.Component {
         <div>{layerSet}</div>
         <label>Tags:{tagSet}</label>
         <h3>{this.props.timesPlayed}</h3>
-        <button value={this.props.trackID} onClick={this.props.loadTrack} >Listen</button>
+        <button value={this.props._id} onClick={this.props.loadTrack} >Listen</button>
         {deleteButton}
       </li>
     )

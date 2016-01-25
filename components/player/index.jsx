@@ -1,9 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
-import {sampleFileNames} from '../helpers'
 import {Howl} from 'howler'
+import {loadAudio} from '../helpers-db'
 
-const soundLibrary = Array(10).fill(null)
+const audioSet = Array(10).fill(null)
+const sampleURLs = Array(10).fill(null)
 let lastPlayingState = false
 
 export default class Player extends React.Component {
@@ -47,23 +48,25 @@ export default class Player extends React.Component {
   render () {
     this.props.layers.forEach((layer, idx) => {
       if (layer > 0) {
-        if (soundLibrary[idx]) {
-          soundLibrary[idx].volume(0.2 * layer)
-          if (this.props.playing && !lastPlayingState) soundLibrary[idx].play()
-          else if (!this.props.playing && lastPlayingState) soundLibrary[idx].pause()
+        if (audioSet[idx]) {
+          audioSet[idx].volume(0.2 * layer)
+          if (this.props.playing && !lastPlayingState) audioSet[idx].play()
+          else if (!this.props.playing && lastPlayingState) audioSet[idx].pause()
         } else {
-          soundLibrary[idx] = new Howl({
-            urls: ['sample/' + sampleFileNames[idx] + '.mp4'],
+          if (!sampleURLs[idx]) loadAudio(sampleURLs, idx)
+          audioSet[idx] = new Howl({
+            urls: [sampleURLs[idx]],
+            format: 'mp4',
             buffer: true,
             loop: true,
             volume: 0.3 * layer
           })
-          if (this.props.playing) soundLibrary[idx].play()
+          if (this.props.playing) audioSet[idx].play()
         }
       } else {
-        if (soundLibrary[idx]) {
-          soundLibrary[idx].unload()
-          soundLibrary[idx] = null
+        if (audioSet[idx]) {
+          audioSet[idx].unload()
+          audioSet[idx] = null
         }
       }
     })

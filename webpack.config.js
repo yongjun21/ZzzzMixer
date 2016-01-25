@@ -1,4 +1,4 @@
-var webpack = require('webpack')
+// var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     loaders: [
       {
         test: /.jsx?$/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel-loader'],
         exclude: /node_modules/
       },
       {

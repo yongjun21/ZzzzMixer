@@ -7,7 +7,8 @@ export default class Library extends React.Component {
   static propTypes = {
     userID: React.PropTypes.string,
     collection: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadTrack: React.PropTypes.func
+    loadTrack: React.PropTypes.func,
+    deleteTrack: React.PropTypes.func
   };
 
   constructor (props) {
@@ -20,7 +21,6 @@ export default class Library extends React.Component {
 
     this.toggleByMe = this.toggleByMe.bind(this)
     this.selectTagFilter = this.selectTagFilter.bind(this)
-    this.deleteTrack = this.deleteTrack.bind(this)
   }
 
   toggleByMe (event) {
@@ -29,13 +29,6 @@ export default class Library extends React.Component {
 
   selectTagFilter (event) {
     this.setState({tagFilter: event.target.selectedIndex})
-  }
-
-  deleteTrack (event) {
-    this.props.collection.splice(this.props.collection.findIndex(track => {
-      return track.trackID === +event.target.value
-    }), 1)
-    this.forceUpdate()
   }
 
   render () {
@@ -58,7 +51,7 @@ export default class Library extends React.Component {
           {...trackInfo}
           allowDelete={this.props.userID === trackInfo.composedBy}
           loadTrack={this.props.loadTrack}
-          deleteTrack={this.deleteTrack} />
+          deleteTrack={this.props.deleteTrack} />
       )
     })
 
