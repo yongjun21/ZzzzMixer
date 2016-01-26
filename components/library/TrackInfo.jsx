@@ -5,7 +5,7 @@ export default class TrackInfo extends React.Component {
   static propTypes = {
     _id: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
-    composedBy: React.PropTypes.string.isRequired,
+    composedBy: React.PropTypes.object,
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
@@ -40,7 +40,7 @@ export default class TrackInfo extends React.Component {
     return (
       <li>
         <h3>{this.props.title}</h3>
-        <h6>{'Composed by: ' + this.props.composedBy}</h6>
+        <h6>{'Composed by: ' + this.props.composedBy.nickname}</h6>
         <div>{layerSet}</div>
         <label>Tags:{tagSet}</label>
         <h3>{this.props.timesPlayed}</h3>

@@ -55,10 +55,16 @@ export function deleteFromDB (track) {
   return localDB.remove(track)
 }
 
-export function fetchDB () {
-  return localDB.replicate.from(remoteDB).then(result => {
+function fetchLocal (cb) {
+  localDB.allDocs({include_docs: true})
+    .then(docs => docs.rows.map(row => row.doc))
+    .then(collection => cb({collection: collection}))
+}
+
+export function fetchDB (cb) {
+  fetchLocal(cb)
+  localDB.replicate.from(remoteDB).then(result => {
     console.log(result)
-    return localDB.allDocs({include_docs: true})
-      .then(docs => docs.rows.map(row => row.doc))
+    fetchLocal(cb)
   })
 }

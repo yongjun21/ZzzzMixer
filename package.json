@@ -1,5 +1,5 @@
 {
-  "name": "zmixer",
+  "name": "z-mixer",
   "version": "0.0.1",
   "description": "A single page app",
   "main": "js/app.js",
@@ -11,37 +11,40 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yongjun21/Zmixer.git"
+    "url": "https://github.com/yongjun21/ZzzzMixer.git"
   },
   "author": "Jared Tong, Yong Jun",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yongjun21/Zmixer/issues"
+    "url": "https://github.com/yongjun21/ZzzzMixer/issues"
   },
-  "homepage": "https://github.com/yongjun21/Zmixer#readme",
+  "homepage": "https://github.com/yongjun21/ZzzzMixer#readme",
   "dependencies": {
+    "auth0-lock": "^8.2.0",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
-    "blob-util": "^1.2.0",
+    "brfs": "^1.4.3",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
+    "ejsify": "^1.0.0",
     "express": "^4.13.4",
     "express-history-api-fallback": "^2.0.0",
     "history": "^1.17.0",
     "howler": "^1.1.29",
-    "http-server": "^0.8.5",
+    "json-loader": "^0.5.4",
     "lodash.intersection": "^4.0.1",
     "lodash.sortby": "^4.0.0",
+    "packageify": "^0.2.3",
     "pouchdb": "^5.2.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "^1.0.3",
     "style-loader": "^0.13.0",
-    "stylus-loader": "^1.5.0",
+    "transform-loader": "^0.2.3",
     "webpack": "^1.12.12",
     "whatwg-fetch": "^0.11.0"
   },

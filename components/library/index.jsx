@@ -1,14 +1,17 @@
 import React from 'react'
 import TrackInfo from './TrackInfo'
+import LogIn from '../login'
 import {tagNames} from '../helpers'
 import sortBy from 'lodash.sortby'
 
 export default class Library extends React.Component {
   static propTypes = {
-    userID: React.PropTypes.string,
+    user: React.PropTypes.object,
     collection: React.PropTypes.arrayOf(React.PropTypes.object),
     loadTrack: React.PropTypes.func,
-    deleteTrack: React.PropTypes.func
+    deleteTrack: React.PropTypes.func,
+    loginUser: React.PropTypes.func,
+    logoutUser: React.PropTypes.func
   };
 
   constructor (props) {
@@ -35,8 +38,9 @@ export default class Library extends React.Component {
     const tagsDropdown = ['--None--'].concat(tagNames)
       .map((tag, idx) => <option key={idx} >{tag}</option>)
 
-    let filteredCollection = (this.state.byMe && this.props.userID !== 'Anon')
-      ? this.props.collection.filter(track => track.composedBy === this.props.userID)
+    let filteredCollection = (this.state.byMe && this.props.user)
+      ? this.props.collection.filter(track => track.composedBy &&
+        track.composedBy.user_id === this.props.user.user_id)
       : this.props.collection
     if (this.state.tagFilter) {
       filteredCollection = filteredCollection.filter(track => {
@@ -45,11 +49,13 @@ export default class Library extends React.Component {
     }
     filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
+      const allowDelete = !!this.props.user &&
+        (!trackInfo.composedBy || this.props.user.user_id === trackInfo.composedBy.user_id)
       return (
         <TrackInfo
           key={idx}
           {...trackInfo}
-          allowDelete={this.props.userID === trackInfo.composedBy}
+          allowDelete={allowDelete}
           loadTrack={this.props.loadTrack}
           deleteTrack={this.props.deleteTrack} />
       )
@@ -57,6 +63,10 @@ export default class Library extends React.Component {
 
     return (
       <section>
+        <LogIn
+          user={this.props.user}
+          loginUser={this.props.loginUser}
+          logoutUser={this.props.logoutUser} />
         <h3>Explore & find new tracks</h3>
         <label>
           <input

@@ -7,7 +7,7 @@ const tagState = {}
 
 export default class Upload extends React.Component {
   static propTypes = {
-    userID: React.PropTypes.string,
+    user: React.PropTypes.object,
     title: React.PropTypes.string,
     tags: React.PropTypes.arrayOf(React.PropTypes.string),
     layers: React.PropTypes.arrayOf(React.PropTypes.number),
@@ -24,18 +24,9 @@ export default class Upload extends React.Component {
       tagState: tagState
     }
 
-    this.importState = this.importState.bind(this)
     this.changeTitle = this.changeTitle.bind(this)
     this.toggleTag = this.toggleTag.bind(this)
     this.uploadData = this.uploadData.bind(this)
-  }
-
-  importState (title, tags) {
-    tagNames.forEach(tag => tagState[tag] = tags.indexOf(tag) > -1)
-    this.setState({
-      title: title,
-      tagState: tagState
-    })
   }
 
   changeTitle (event) {
@@ -100,7 +91,7 @@ export default class Upload extends React.Component {
         <label>Composed by:
           <input
             type='text'
-            value={this.props.userID}
+            value={this.props.user.nickname || 'Anon'}
             readOnly={true} />
         </label>
         <label>Select tags:{tagList}</label>

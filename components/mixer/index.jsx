@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router'
+import LogIn from '../login'
 import SoundBubble from '../bubble'
 import {shuffledArr, sampleNames, bubbleSizes} from '../helpers'
 import intersection from 'lodash.intersection'
@@ -9,8 +10,11 @@ let reserved = basket.splice(bubbleSizes.length)
 
 export default class Mixer extends React.Component {
   static propTypes = {
+    user: React.PropTypes.object,
     layers: React.PropTypes.arrayOf(React.PropTypes.number),
-    volumeUp: React.PropTypes.func
+    volumeUp: React.PropTypes.func,
+    loginUser: React.PropTypes.func,
+    logoutUser: React.PropTypes.func
   };
 
   constructor (props) {
@@ -57,6 +61,10 @@ export default class Mixer extends React.Component {
 
     return (
       <section>
+        <LogIn
+          user={this.props.user}
+          loginUser={this.props.loginUser}
+          logoutUser={this.props.logoutUser} />
         <h3>Be creative</h3>
         <div>{renderBasket}</div>
         <button onClick={this.randomize}>Shuffle</button>

@@ -17,7 +17,6 @@ ReactDOM.render((
         <Route path='/upload' component={Upload}/>
       </Route>
     </Route>
-    <Redirect from='/' to='library'/>
-    <Redirect from='/index.html' to='library'/>
+    <Redirect from='/*' to='library'/>
   </Router>
 ), document.getElementById('main'))
