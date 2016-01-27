@@ -40,7 +40,8 @@ export default class TrackInfo extends React.Component {
     return (
       <li>
         <h3>{this.props.title}</h3>
-        <h6>{'Composed by: ' + this.props.composedBy.nickname}</h6>
+        <h6>{'Composed by: ' + (this.props.composedBy
+          ? this.props.composedBy.nickname : 'Anon')}</h6>
         <div>{layerSet}</div>
         <label>Tags:{tagSet}</label>
         <h3>{this.props.timesPlayed}</h3>

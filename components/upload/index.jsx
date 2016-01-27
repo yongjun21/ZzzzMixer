@@ -91,7 +91,7 @@ export default class Upload extends React.Component {
         <label>Composed by:
           <input
             type='text'
-            value={this.props.user.nickname || 'Anon'}
+            value={this.props.user ? this.props.user.nickname : 'Anon'}
             readOnly={true} />
         </label>
         <label>Select tags:{tagList}</label>

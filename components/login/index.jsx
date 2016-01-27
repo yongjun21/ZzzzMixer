@@ -8,9 +8,16 @@ export default class LogIn extends React.Component {
   };
 
   render () {
+    const displayName = this.props.user
+      ? 'Logged in as ' + this.props.user.nickname : ''
     const loginButton = this.props.user
       ? <button onClick={this.props.logoutUser}>Log out</button>
       : <button onClick={this.props.loginUser}>Log in</button>
-    return loginButton
+    return (
+      <section>
+        <span>{displayName}</span>
+        {loginButton}
+      </section>
+    )
   }
 }
