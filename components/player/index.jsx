@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import {Howl} from 'howler'
 import {loadAudio} from '../helpers-db'
+import './style.css'
 
 const audioSet = Array(10).fill(null)
 const sampleURLs = Array(10).fill(null)
@@ -9,7 +10,7 @@ let lastPlayingState = false
 
 export default class Player extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string.isRequired,
+    selectedTrack: React.PropTypes.object,
     playing: React.PropTypes.bool.isRequired,
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     togglePlay: React.PropTypes.func.isRequired
@@ -73,7 +74,18 @@ export default class Player extends React.Component {
 
     lastPlayingState = this.props.playing
 
+    let title = 'Untitled'
+    let composer = ''
+
+    if (this.props.selectedTrack) {
+      title = this.props.selectedTrack.title
+      if (this.props.selectedTrack.composedBy) {
+        composer = 'By: ' + this.props.selectedTrack.composedBy.nickname
+      }
+    }
+
     const playButtonProps = {
+      id: 'play-button',
       className: classNames('fa', {
         'fa-play': !this.props.playing,
         'fa-pause': this.props.playing
@@ -90,11 +102,12 @@ export default class Player extends React.Component {
       (this.state.countdown % 60 < 10 ? '0' : '') + this.state.countdown % 60
 
     return (
-      <section>
-        <h3>{this.props.title || 'Untitled'}</h3>
-        <button {...playButtonProps} />
-        <button {...timerProps} >{timerDisplay}</button>
-      </section>
+      <footer id='player'>
+        <span className='title'>{title}</span>
+        <span className='composer'>{composer}</span>
+        <a {...playButtonProps} />
+        <a {...timerProps} >{timerDisplay}</a>
+      </footer>
     )
   }
 }

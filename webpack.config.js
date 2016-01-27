@@ -14,12 +14,12 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /.jsx?$/,
+        test: /\.jsx?$/,
         loaders: ['babel-loader'],
         exclude: /node_modules/
       },
       {
-        test: /\.styl$/,
+        test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
       {

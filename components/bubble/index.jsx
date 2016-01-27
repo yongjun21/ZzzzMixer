@@ -1,24 +1,26 @@
 import React from 'react'
 import {sampleNames} from '../helpers'
+import './style.css'
 
 export default class SoundBubble extends React.Component {
   static propTypes = {
     sampleID: React.PropTypes.number.isRequired,
     volume: React.PropTypes.number.isRequired,
     size: React.PropTypes.number.isRequired,
+    color: React.PropTypes.string.isRequired,
     active: React.PropTypes.bool.isRequired,
     volumeUp: React.PropTypes.func
   };
 
   render () {
-    const sample = sampleNames[this.props.sampleID]
-    // const iconUrl = '/assets/icons/' + sampleFileNames[this.props.sampleID] + 'jpg'
-    const scaleFactor = this.props.size * (1 + 0 * this.props.volume)
-
     const buttonProps = {
+      className: 'bubble',
       style: {
-        // backgroundImage: 'url(' + iconUrl + ')',
-        transform: 'scale(' + scaleFactor + ')'
+        color: this.props.color,
+        boxShadow: '0 0 ' + this.props.volume * 10 + 'px ' +
+          this.props.volume * 5 + 'px white',
+        WebkitTransform: 'scale(' + this.props.size + ') rotate(-30deg)',
+        transform: 'scale(' + this.props.size + ') rotate(-30deg)'
       },
       value: this.props.sampleID,
       disabled: !this.props.active,
@@ -26,7 +28,7 @@ export default class SoundBubble extends React.Component {
     }
 
     return (
-      <button {...buttonProps}>{sample + ': ' + this.props.volume}</button>
+      <button {...buttonProps}>{sampleNames[this.props.sampleID]}</button>
     )
   }
 }

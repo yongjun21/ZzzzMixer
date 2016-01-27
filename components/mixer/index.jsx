@@ -1,8 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
-import LogIn from '../login'
 import SoundBubble from '../bubble'
-import {shuffledArr, sampleNames, bubbleSizes} from '../helpers'
+import {shuffledArr, sampleNames, bubbleSizes, bgColors} from '../helpers'
 import intersection from 'lodash.intersection'
 
 let basket = sampleNames.map((val, idx) => idx)
@@ -13,12 +12,12 @@ export default class Mixer extends React.Component {
     user: React.PropTypes.object,
     layers: React.PropTypes.arrayOf(React.PropTypes.number),
     volumeUp: React.PropTypes.func,
-    loginUser: React.PropTypes.func,
-    logoutUser: React.PropTypes.func
+    unloadTrack: React.PropTypes.func
   };
 
   constructor (props) {
     super(props)
+    this.state = {bg: 0}
     this.shuffleBasket = this.shuffleBasket.bind(this)
     this.randomize = this.randomize.bind(this)
   }
@@ -37,7 +36,7 @@ export default class Mixer extends React.Component {
 
   randomize () {
     this.shuffleBasket()
-    this.forceUpdate()
+    this.setState({bg: (this.state.bg + 1) % 5})
   }
 
   render () {
@@ -53,6 +52,7 @@ export default class Mixer extends React.Component {
         sampleID: sampleID,
         volume: this.props.layers[sampleID],
         size: bubbleSizes[idx],
+        color: bgColors[this.state.bg],
         active: true,
         volumeUp: this.props.volumeUp
       }
@@ -60,14 +60,10 @@ export default class Mixer extends React.Component {
     })
 
     return (
-      <section>
-        <LogIn
-          user={this.props.user}
-          loginUser={this.props.loginUser}
-          logoutUser={this.props.logoutUser} />
-        <h3>Be creative</h3>
+      <section id='mixer' style={{backgroundColor: bgColors[this.state.bg]}}>
         <div>{renderBasket}</div>
         <button onClick={this.randomize}>Shuffle</button>
+        <button onClick={this.props.unloadTrack}>Reset</button>
         <Link to='/upload'>Upload</Link>
       </section>
     )

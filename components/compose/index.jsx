@@ -6,6 +6,6 @@ export default class Compose extends React.Component {
   };
 
   render () {
-    return <section>{React.cloneElement(this.props.children, this.props)}</section>
+    return React.cloneElement(this.props.children, this.props)
   }
 }

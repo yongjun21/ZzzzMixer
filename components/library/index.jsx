@@ -1,17 +1,15 @@
 import React from 'react'
 import TrackInfo from './TrackInfo'
-import LogIn from '../login'
-import {tagNames} from '../helpers'
+import {tagNames, bgColors} from '../helpers'
 import sortBy from 'lodash.sortby'
+import './style.css'
 
 export default class Library extends React.Component {
   static propTypes = {
     user: React.PropTypes.object,
     collection: React.PropTypes.arrayOf(React.PropTypes.object),
     loadTrack: React.PropTypes.func,
-    deleteTrack: React.PropTypes.func,
-    loginUser: React.PropTypes.func,
-    logoutUser: React.PropTypes.func
+    deleteTrack: React.PropTypes.func
   };
 
   constructor (props) {
@@ -51,23 +49,21 @@ export default class Library extends React.Component {
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
       const allowDelete = !!this.props.user &&
         (!trackInfo.composedBy || this.props.user.user_id === trackInfo.composedBy.user_id)
+      const deleteButton = allowDelete
+        ? <button onClick={this.props.deleteTrack(trackInfo._id)} >X</button>
+        : null
       return (
         <TrackInfo
           key={idx}
           {...trackInfo}
-          allowDelete={allowDelete}
-          loadTrack={this.props.loadTrack}
-          deleteTrack={this.props.deleteTrack} />
+          loadTrack={this.props.loadTrack(trackInfo._id)}
+          deleteButton={deleteButton}
+          bgColor={bgColors[idx % 5]} />
       )
     })
 
     return (
       <section>
-        <LogIn
-          user={this.props.user}
-          loginUser={this.props.loginUser}
-          logoutUser={this.props.logoutUser} />
-        <h3>Explore & find new tracks</h3>
         <label>
           <input
             type='checkbox'

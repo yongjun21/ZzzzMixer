@@ -8,8 +8,7 @@ const tagState = {}
 export default class Upload extends React.Component {
   static propTypes = {
     user: React.PropTypes.object,
-    title: React.PropTypes.string,
-    tags: React.PropTypes.arrayOf(React.PropTypes.string),
+    selectedTrack: React.PropTypes.object,
     layers: React.PropTypes.arrayOf(React.PropTypes.number),
     uploadHandler: React.PropTypes.func
   };
@@ -17,10 +16,16 @@ export default class Upload extends React.Component {
   constructor (props) {
     super(props)
 
-    tagNames.forEach(tag => tagState[tag] = this.props.tags.indexOf(tag) > -1)
+    if (this.props.selectedTrack) {
+      tagNames.forEach(tag => {
+        tagState[tag] = this.props.selectedTrack.tags.indexOf(tag) > -1
+      })
+    } else {
+      tagNames.forEach(tag => tagState[tag] = false)
+    }
 
     this.state = {
-      title: this.props.title,
+      title: this.props.selectedTrack ? this.props.selectedTrack.title : '',
       tagState: tagState
     }
 
@@ -40,7 +45,7 @@ export default class Upload extends React.Component {
 
   uploadData () {
     const newData = {
-      title: this.state.title,
+      title: this.state.title || 'Untitled',
       tags: tagNames.filter(tag => this.state.tagState[tag])
     }
     if (!newData.tags.length) newData.tags.push('No tag')
@@ -54,6 +59,7 @@ export default class Upload extends React.Component {
           sampleID: idx,
           volume: volume,
           size: 1,
+          color: 'white',
           active: false
         }
       })

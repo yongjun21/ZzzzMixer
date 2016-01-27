@@ -36,6 +36,14 @@ export const sampleFileNames = [
   'whitenoise'
 ]
 
+export const bgColors = [
+  '#B08B0D',
+  '#97282C',
+  '#428F89',
+  '#5F6024',
+  '#805489'
+]
+
 export const bubbleSizes = [1, 1, 1, 1, 1, 1, 1]
 
 // Functions

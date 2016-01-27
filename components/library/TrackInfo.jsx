@@ -9,18 +9,19 @@ export default class TrackInfo extends React.Component {
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
-    allowDelete: React.PropTypes.bool.isRequired,
     loadTrack: React.PropTypes.func.isRequired,
-    deleteTrack: React.PropTypes.func.isRequired
+    deleteButton: React.PropTypes.element,
+    bgColor: React.PropTypes.string.isRequired
   };
 
   render () {
-    const layerSet = this.props.layers
+    const bubbleSet = this.props.layers
       .map((volume, idx) => {
         return {
           sampleID: idx,
           volume: volume,
           size: 1,
+          color: this.props.bgColor,
           active: false
         }
       })
@@ -30,23 +31,19 @@ export default class TrackInfo extends React.Component {
       })
 
     const tagSet = this.props.tags.map((tag, idx) => {
-      return <span key={idx}>{tag}</span>
+      return <span className='tag' key={idx}>{tag}</span>
     })
 
-    const deleteButton = this.props.allowDelete
-      ? <button value={this.props._id} onClick={this.props.deleteTrack} >X</button>
-      : null
-
     return (
-      <li>
-        <h3>{this.props.title}</h3>
-        <h6>{'Composed by: ' + (this.props.composedBy
-          ? this.props.composedBy.nickname : 'Anon')}</h6>
-        <div>{layerSet}</div>
+      <li style={{backgroundColor: this.props.bgColor}}
+        onClick={this.props.loadTrack}>
+        <span className='track-title'>{this.props.title}</span>
+        <span className='trach-composer'>{'Composed by: ' + (this.props.composedBy
+          ? this.props.composedBy.nickname : 'Anon')}</span>
+        <div className='bubble-ctn'>{bubbleSet}</div>
         <label>Tags:{tagSet}</label>
-        <h3>{this.props.timesPlayed}</h3>
-        <button value={this.props._id} onClick={this.props.loadTrack} >Listen</button>
-        {deleteButton}
+        <span>{this.props.timesPlayed}</span>
+        {this.props.deleteButton}
       </li>
     )
   }

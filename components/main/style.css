@@ -1,0 +1,36 @@
+html {
+  font-family: 'Ubuntu Condensed', sans-serif;
+  color: white;
+  font-size: 5vw;
+}
+
+body {
+  background-color: black;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+header {
+  position: fixed;
+  top: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
+section {
+  margin: 8vh 0 24vw;
+  min-height: calc(92vh - 24vw);
+}
+
+@media (min-width: 500px) {
+  html {
+    font-size: 25px;
+  }
+
+  section {
+    margin: 8vh 0 120px;
+  }
+}

@@ -1,0 +1,11 @@
+#navbar {
+  background-color: black;
+  width: 100%;
+  height: 8vh;
+}
+
+@media (min-width: 500px) {
+  #navbar {
+    width: 500px;
+  }
+}
