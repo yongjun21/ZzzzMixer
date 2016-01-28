@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 import SoundBubble from '../bubble'
-import {tagNames} from '../helpers'
+import {tagNames, defaultBubbleStyle} from '../helpers'
 
 const tagState = {}
 
@@ -54,19 +54,19 @@ export default class Upload extends React.Component {
 
   render () {
     const layersChosen = this.props.layers
-      .map((volume, idx) => {
-        return {
-          sampleID: idx,
-          volume: volume,
-          size: 1,
+    .map((volume, idx) => {
+      return {
+        key: idx,
+        sampleID: volume > 0 ? idx : -1,
+        style: Object.assign({
           color: 'white',
-          active: false
-        }
-      })
-      .filter(props => props.volume > 0)
-      .map(props => {
-        return <SoundBubble key={props.sampleID} {...props} />
-      })
+          boxShadow: '0 0 ' + volume * 0.25 + 'em ' + volume * 0.15 + 'em white'
+        }, defaultBubbleStyle),
+        active: false
+      }
+    })
+    .filter(props => props.sampleID > -1)
+    .map(props => <SoundBubble {...props} />)
 
     const tagList = []
     tagNames.map((tag, idx) => {

@@ -44,18 +44,36 @@ export const bgColors = [
   '#805489'
 ]
 
-export const bubbleSizes = [1, 1, 1, 1, 1, 1, 1]
-
-export const bubbleTransform = [
-  {WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-  transform: 'scale(2) transform(1, 2) rotate(-30deg)'},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {}
+export const bubbleStyles = [
+  {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }, {
+    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+  }
 ]
+
+export const defaultBubbleStyle = {
+  marginRight: '-0.4em',
+  WebkitTransform: 'rotate(-30deg)',
+  transform: 'rotate(-30deg)'
+}
 
 // Functions
 

@@ -1,5 +1,5 @@
 button.bubble {
-  display: inline-block;
+  display: block;
   vertical-align: top;
   width: 12vw;
   height: 12vw;
@@ -8,11 +8,9 @@ button.bubble {
   border-radius: 50%;
   margin: 0;
   padding: 0;
-  border: 0;
   font-size: 0.7rem;
   font-family: 'Permanent Marker', cursive;
   background-color: black;
   -webkit-transform-origin: center;
   transform-origin: center;
-  outline: none;
 }

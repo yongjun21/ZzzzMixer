@@ -48,18 +48,19 @@ export default class Library extends React.Component {
     }
     filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
-      const listenButton = <a className='fa fa-music' onClick={this.props.loadTrack(trackInfo._id)} />
       const allowDelete = !!this.props.user &&
         (!trackInfo.composedBy || this.props.user.user_id === trackInfo.composedBy.user_id)
       const deleteButton = allowDelete
-        ? <a className='fa fa-trash-o' onClick={this.props.deleteTrack(trackInfo._id)} />
+        ? <button className='fa fa-trash-o' onClick={this.props.deleteTrack(trackInfo._id)} />
         : null
+      const listenButton =
+        <button key='listen' className='fa fa-music' onClick={this.props.loadTrack(trackInfo._id)} />
       return (
         <TrackInfo
           key={idx}
           {...trackInfo}
-          listenButton={listenButton}
           deleteButton={deleteButton}
+          listenButton={listenButton}
           bgColor={bgColors[idx % 5]} />
       )
     })
@@ -76,13 +77,13 @@ export default class Library extends React.Component {
       <section id='library'>
         <div className='filters'>
           <div className='ctn'>
-            Songs by Me
-            <a {...toggleButtonProps} />
-          </div>
-          <div className='ctn'>
-            <i className='fa fa-tag' />
+            <span className='fa fa-tag' />
             <select onChange={this.selectTagFilter} >
               {tagsDropdown}</select>
+          </div>
+          <div className='ctn'>
+            Songs by Me
+            <button {...toggleButtonProps} />
           </div>
         </div>
         <ul>{filteredCollection}</ul>

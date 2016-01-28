@@ -1,5 +1,6 @@
 import React from 'react'
 import SoundBubble from '../bubble'
+import {defaultBubbleStyle} from '../helpers'
 
 export default class TrackInfo extends React.Component {
   static propTypes = {
@@ -18,32 +19,33 @@ export default class TrackInfo extends React.Component {
     const bubbleSet = this.props.layers
       .map((volume, idx) => {
         return {
-          sampleID: idx,
-          volume: volume,
-          size: 1,
-          color: this.props.bgColor,
+          key: idx,
+          sampleID: volume > 0 ? idx : -1,
+          style: Object.assign({
+            color: this.props.bgColor,
+            boxShadow: '0 0 ' + volume * 0.25 + 'em ' + volume * 0.15 + 'em white'
+          }, defaultBubbleStyle),
           active: false
         }
       })
-      .filter(props => props.volume > 0)
-      .map(props => {
-        return <SoundBubble key={props.sampleID} {...props} />
-      })
+      .filter(props => props.sampleID > -1)
+      .map(props => <SoundBubble {...props} />)
 
     const tagSet = this.props.tags.map((tag, idx) => {
-      return <span className='tag' key={idx}>{tag}</span>
+      return <span className='track-tag' key={idx}>{tag}</span>
     })
 
+    bubbleSet.push(this.props.listenButton)
+
     return (
-      <li style={{backgroundColor: this.props.bgColor}} >
+      <li className='track-info' style={{backgroundColor: this.props.bgColor}} >
         <span className='track-title'>{this.props.title}</span>
-        <span className='trach-composer'>{'Composed by: ' + (this.props.composedBy
+        <span className='track-composer'>{'By: ' + (this.props.composedBy
           ? this.props.composedBy.nickname : 'Anon')}</span>
-        <div className='bubble-ctn'>{bubbleSet}</div>
-        <span className='fa fa-tags' >{tagSet}</span>
-        <span>{this.props.timesPlayed}</span>
-        {this.props.listenButton}
         {this.props.deleteButton}
+        <span className='fa fa-thumbs-o-up' >{this.props.timesPlayed}</span>
+        <div className='track-bubbles'>{bubbleSet}</div>
+        <span className='fa fa-tags' >{tagSet}</span>
       </li>
     )
   }

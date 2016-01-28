@@ -2,8 +2,7 @@
   position: relative;
   box-sizing: border-box;
   background-color: dimgrey;
-  flex-basis: 24vw;
-  flex-shrink: 0;
+  flex: 0 0 24vw;
   padding: 1%;
 }
 
@@ -54,6 +53,7 @@
 
 #player > .countdown-timer .text {
   font-size: 0.5rem;
+  text-align: right;
 }
 
 @media (min-width: 500px) {

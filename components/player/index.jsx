@@ -42,7 +42,7 @@ export default class Player extends React.Component {
     }
     this.setState({
       timer: window.setInterval(intervalCallback.bind(this), 1000),
-      countdown: 10
+      countdown: 900
     })
   }
 
@@ -99,11 +99,11 @@ export default class Player extends React.Component {
       <footer id='player'>
         <div className='title'>{title}</div>
         <div className='composer'>{composer}</div>
-        <a {...playButtonProps} />
-        <a className='countdown-timer' onClick={this.startCountdown} >
+        <button {...playButtonProps} />
+        <button className='countdown-timer' onClick={this.startCountdown} >
           {timerDisplay}
           <div className='text'> remaining</div>
-        </a>
+        </button>
       </footer>
     )
   }

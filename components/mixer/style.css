@@ -1,3 +1,7 @@
 #mixer {
   height: 100%;
 }
+
+#mixer button {
+  position: absolute;
+}

@@ -1,5 +1,4 @@
 #library {
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -8,18 +7,15 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow: auto;
-}
-
-#library > .padding {
-  margin: auto 0;
   flex-grow: 1;
+  overflow: auto;
 }
 
 #library > .filters {
   display: flex;
   justify-content: space-between;
   padding: 1%;
+  flex: 0 0 auto;
 }
 
 .filters .ctn {
@@ -27,11 +23,54 @@
   align-items: center;
 }
 
-#library .fa::before {
+.fa-tag::before {
   font-size: 1.5rem;
-  margin: 0 0.5em;
+  margin-right: 0.5em;
+}
+
+.fa-toggle-on::before, .fa-toggle-off::before {
+  font-size: 1.5rem;
+  margin-left: 0.3em;
 }
 
 #library select {
   color: black
+}
+
+.track-info {
+  position: relative;
+  padding: 1%;
+  font-size: 0.7rem;
+}
+
+.track-bubbles {
+  padding: 0.6em 0.4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.track-title {
+  font-size: 1.5em;
+  margin-right: 0.5em;
+}
+
+.fa-thumbs-o-up {
+  position: absolute;
+  right: 0;
+  padding-top: 1%;
+  padding-right: 1%;
+  font-size: 1.2em;
+}
+
+.track-tag {
+  background-color: black;
+  border-radius: 5px;
+  margin-left: 0.3em;
+  padding: 1px;
+}
+
+.fa-music {
+  font-size: 2.5em;
+  margin-left: 0.5em;
 }

@@ -10,22 +10,20 @@ export default class NavBar extends React.Component {
   };
 
   render () {
-    const displayName = this.props.user
-      ? 'Hi ' + this.props.user.nickname : ''
-    const navLeft = window.location.pathname === '/library'
-      ? <Link className='nav-icon fa fa-reply' to='/compose'>Composer</Link> : null
-    const navRight = window.location.pathname === '/library'
-      ? null : <IndexLink className='nav-icon fa fa-share' to='/library'>Library</IndexLink>
+    const title = this.props.user
+      ? <span className='title' >{'Hi ' + this.props.user.nickname + ','}</span> : null
+    const navIcon = window.location.pathname === '/library'
+      ? <Link className='fa fa-reply' to='/compose'>Composer</Link>
+      : <IndexLink className='fa fa-share' to='/library'>Library</IndexLink>
     const loginButton = this.props.user
-      ? <a className='fa fa-sign-out' onClick={this.props.logoutUser} >Sign out</a>
-      : <a className='fa fa-sign-in' onClick={this.props.loginUser} >Sign in</a>
+      ? <button className='fa fa-sign-out' onClick={this.props.logoutUser} >Sign out</button>
+      : <button className='fa fa-sign-in' onClick={this.props.loginUser} >Sign in</button>
 
     return (
       <header id='navbar'>
-        {navLeft}
-        <span>{displayName}</span>
+        {title}
         {loginButton}
-        {navRight}
+        {navIcon}
       </header>
     )
   }

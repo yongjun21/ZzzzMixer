@@ -1,19 +1,21 @@
 #navbar {
   box-sizing: border-box;
   background-color: black;
-  padding: 1%;
+  padding: 2% 1%;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
-#navbar > .nav-icon {
+.fa-reply, .fa-share {
   font-size: 0.5rem;
   text-align: center;
+  flex: 0 0 6em;
 }
 
-#navbar > .nav-icon::before {
+.fa-reply::before, .fa-share::before {
   display: block;
   font-size: 1.2rem;
 }
@@ -23,13 +25,19 @@
   background-color: white;
   color: black;
   font-weight: bold;
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   padding: 6px;
+  margin: 0 1em;
   border-radius: 6px;
+  flex: 0 0 auto;
 }
 
 .fa-sign-in::before, .fa-sign-out::before {
   margin-right: 3px;
+}
+
+#navbar > .title {
+  flex: 1 0 auto;
 }
 
 @media (min-width: 500px) {
