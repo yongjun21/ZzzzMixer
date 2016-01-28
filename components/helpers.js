@@ -46,6 +46,17 @@ export const bgColors = [
 
 export const bubbleSizes = [1, 1, 1, 1, 1, 1, 1]
 
+export const bubbleTransform = [
+  {WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
+  transform: 'scale(2) transform(1, 2) rotate(-30deg)'},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {}
+]
+
 // Functions
 
 export function shuffledArr (arr) {

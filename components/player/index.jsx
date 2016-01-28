@@ -85,17 +85,11 @@ export default class Player extends React.Component {
     }
 
     const playButtonProps = {
-      id: 'play-button',
-      className: classNames('fa', {
-        'fa-play': !this.props.playing,
-        'fa-pause': this.props.playing
+      className: classNames('play-button', 'fa', {
+        'fa-volume-up': this.props.playing,
+        'fa-volume-off': !this.props.playing
       }),
       onClick: this.props.togglePlay
-    }
-
-    const timerProps = {
-      className: 'countdown-timer',
-      onClick: this.startCountdown
     }
 
     const timerDisplay = Math.floor(this.state.countdown / 60) + ':' +
@@ -103,10 +97,13 @@ export default class Player extends React.Component {
 
     return (
       <footer id='player'>
-        <span className='title'>{title}</span>
-        <span className='composer'>{composer}</span>
+        <div className='title'>{title}</div>
+        <div className='composer'>{composer}</div>
         <a {...playButtonProps} />
-        <a {...timerProps} >{timerDisplay}</a>
+        <a className='countdown-timer' onClick={this.startCountdown} >
+          {timerDisplay}
+          <div className='text'> remaining</div>
+        </a>
       </footer>
     )
   }

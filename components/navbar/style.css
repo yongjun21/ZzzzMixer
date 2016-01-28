@@ -1,7 +1,35 @@
 #navbar {
+  box-sizing: border-box;
   background-color: black;
-  width: 100%;
-  height: 8vh;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+#navbar > .nav-icon {
+  font-size: 0.5rem;
+  text-align: center;
+}
+
+#navbar > .nav-icon::before {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.fa-sign-in, .fa-sign-out {
+  display: block;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 0.7rem;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.fa-sign-in::before, .fa-sign-out::before {
+  margin-right: 3px;
 }
 
 @media (min-width: 500px) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 import SoundBubble from '../bubble'
-import {shuffledArr, sampleNames, bubbleSizes, bgColors} from '../helpers'
+import {shuffledArr, sampleNames, bubbleSizes, bubbleTransform, bgColors} from '../helpers'
 import intersection from 'lodash.intersection'
 
 let basket = sampleNames.map((val, idx) => idx)
@@ -25,7 +25,7 @@ export default class Mixer extends React.Component {
   shuffleBasket () {
     basket = []
     reserved = []
-    this.props.layers.forEach((layer, idx) => {
+    this.props.labuttonyers.forEach((layer, idx) => {
       if (layer > 0) basket.push(idx)
       else reserved.push(idx)
     })
@@ -50,6 +50,11 @@ export default class Mixer extends React.Component {
       const bubbleProps = {
         key: idx,
         sampleID: sampleID,
+        style: Object.assign(bubbleTransform[idx], {
+          color: bgColors[this.state.bg],
+          boxShadow: '0 0 ' + this.props.layers[sampleID] * 10 + 'px ' +
+            this.props.layers[sampleID] * 5 + 'px white'
+        }),
         volume: this.props.layers[sampleID],
         size: bubbleSizes[idx],
         color: bgColors[this.state.bg],

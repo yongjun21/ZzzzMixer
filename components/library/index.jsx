@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import TrackInfo from './TrackInfo'
 import {tagNames, bgColors} from '../helpers'
 import sortBy from 'lodash.sortby'
@@ -24,8 +25,8 @@ export default class Library extends React.Component {
     this.selectTagFilter = this.selectTagFilter.bind(this)
   }
 
-  toggleByMe (event) {
-    this.setState({byMe: event.target.checked})
+  toggleByMe () {
+    this.setState({byMe: !this.state.byMe})
   }
 
   selectTagFilter (event) {
@@ -47,34 +48,45 @@ export default class Library extends React.Component {
     }
     filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
+      const listenButton = <a className='fa fa-music' onClick={this.props.loadTrack(trackInfo._id)} />
       const allowDelete = !!this.props.user &&
         (!trackInfo.composedBy || this.props.user.user_id === trackInfo.composedBy.user_id)
       const deleteButton = allowDelete
-        ? <button onClick={this.props.deleteTrack(trackInfo._id)} >X</button>
+        ? <a className='fa fa-trash-o' onClick={this.props.deleteTrack(trackInfo._id)} />
         : null
       return (
         <TrackInfo
           key={idx}
           {...trackInfo}
-          loadTrack={this.props.loadTrack(trackInfo._id)}
+          listenButton={listenButton}
           deleteButton={deleteButton}
           bgColor={bgColors[idx % 5]} />
       )
     })
 
+    const toggleButtonProps = {
+      className: classNames('fa', {
+        'fa-toggle-on': !this.state.byMe,
+        'fa-toggle-off': this.state.byMe
+      }),
+      onClick: this.toggleByMe
+    }
+
     return (
-      <section>
-        <label>
-          <input
-            type='checkbox'
-            checked={this.state.byMe}
-            onClick={this.toggleByMe} />
-          By me
-        </label>
-        <label>Filter by tag:
-          <select onChange={this.selectTagFilter} >{tagsDropdown}</select>
-        </label>
+      <section id='library'>
+        <div className='filters'>
+          <div className='ctn'>
+            Songs by Me
+            <a {...toggleButtonProps} />
+          </div>
+          <div className='ctn'>
+            <i className='fa fa-tag' />
+            <select onChange={this.selectTagFilter} >
+              {tagsDropdown}</select>
+          </div>
+        </div>
         <ul>{filteredCollection}</ul>
+        <div className='padding' />
       </section>
     )
   }

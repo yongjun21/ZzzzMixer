@@ -9,7 +9,7 @@ export default class TrackInfo extends React.Component {
     layers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     timesPlayed: React.PropTypes.number.isRequired,
-    loadTrack: React.PropTypes.func.isRequired,
+    listenButton: React.PropTypes.element.isRequired,
     deleteButton: React.PropTypes.element,
     bgColor: React.PropTypes.string.isRequired
   };
@@ -35,14 +35,14 @@ export default class TrackInfo extends React.Component {
     })
 
     return (
-      <li style={{backgroundColor: this.props.bgColor}}
-        onClick={this.props.loadTrack}>
+      <li style={{backgroundColor: this.props.bgColor}} >
         <span className='track-title'>{this.props.title}</span>
         <span className='trach-composer'>{'Composed by: ' + (this.props.composedBy
           ? this.props.composedBy.nickname : 'Anon')}</span>
         <div className='bubble-ctn'>{bubbleSet}</div>
-        <label>Tags:{tagSet}</label>
+        <span className='fa fa-tags' >{tagSet}</span>
         <span>{this.props.timesPlayed}</span>
+        {this.props.listenButton}
         {this.props.deleteButton}
       </li>
     )
