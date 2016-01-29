@@ -36,6 +36,12 @@ export const sampleFileNames = [
   'whitenoise'
 ]
 
+export const titleString = {
+  '/library': 'Found anything you like?',
+  '/compose': 'Ready to make some music',
+  '/upload': 'One more step'
+}
+
 export const bgColors = [
   '#B08B0D',
   '#97282C',

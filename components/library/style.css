@@ -63,6 +63,10 @@
   font-size: 1.2em;
 }
 
+.fa-thumbs-o-up::before {
+  margin-right: 0.3em;
+}
+
 .track-tag {
   background-color: black;
   border-radius: 5px;

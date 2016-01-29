@@ -36,8 +36,13 @@
   margin-right: 3px;
 }
 
-#navbar > .title {
-  flex: 1 0 auto;
+#navbar > .title-ctn {
+  flex-grow: 1;
+}
+
+#navbar .welcome {
+  display: block;
+  font-size: 0.6em
 }
 
 @media (min-width: 500px) {
