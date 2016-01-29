@@ -8,13 +8,13 @@ body {
   background-color: black;
   max-width: 500px;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 main {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 section {
@@ -36,5 +36,13 @@ button {
 @media (min-width: 500px) {
   html {
     font-size: 25px;
+  }
+}
+
+@media (max-height: 500px) {
+  main {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
   }
 }

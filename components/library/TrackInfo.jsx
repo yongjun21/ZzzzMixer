@@ -44,7 +44,7 @@ export default class TrackInfo extends React.Component {
           ? this.props.composedBy.nickname : 'Anon')}</span>
         {this.props.deleteButton}
         <span className='fa fa-thumbs-o-up' >{this.props.timesPlayed}</span>
-        <div className='track-bubbles'>{bubbleSet}</div>
+        <div className='track-bubbles-ctn'>{bubbleSet}</div>
         <span className='fa fa-tags' >{tagSet}</span>
       </li>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router'
 import SoundBubble from '../bubble'
 import {tagNames, defaultBubbleStyle} from '../helpers'
+import './style.css'
 
 const tagState = {}
 
@@ -10,7 +10,8 @@ export default class Upload extends React.Component {
     user: React.PropTypes.object,
     selectedTrack: React.PropTypes.object,
     layers: React.PropTypes.arrayOf(React.PropTypes.number),
-    uploadHandler: React.PropTypes.func
+    uploadHandler: React.PropTypes.func,
+    history: React.PropTypes.object
   };
 
   constructor (props) {
@@ -32,6 +33,7 @@ export default class Upload extends React.Component {
     this.changeTitle = this.changeTitle.bind(this)
     this.toggleTag = this.toggleTag.bind(this)
     this.uploadData = this.uploadData.bind(this)
+    this.goBack = this.goBack.bind(this)
   }
 
   changeTitle (event) {
@@ -50,6 +52,10 @@ export default class Upload extends React.Component {
     }
     if (!newData.tags.length) newData.tags.push('No tag')
     this.props.uploadHandler(newData)
+  }
+
+  goBack () {
+    this.props.history.goBack()
   }
 
   render () {
@@ -76,33 +82,39 @@ export default class Upload extends React.Component {
         checked: this.state.tagState[tag],
         onChange: this.toggleTag
       }
-      tagList.push(<label key={idx} >{tag}<input {...checkboxProps} /></label>)
+      tagList.push(<label key={idx} ><input {...checkboxProps} />{tag}</label>)
     })
 
     return (
-      <section>
-        <h2>Great work!</h2>
-        <h3>Here's your track</h3>
-        <div>{layersChosen}</div>
-        <h3>One more step</h3>
-        <label>Title:
-          <input
-            type='text'
-            value={this.state.title}
-            placeholder='Give me a name'
-            maxLength={40}
-            required={true}
-            onChange={this.changeTitle} />
-        </label>
-        <label>Composed by:
-          <input
-            type='text'
-            value={this.props.user ? this.props.user.nickname : 'Anon'}
-            readOnly={true} />
-        </label>
-        <label>Select tags:{tagList}</label>
-        <Link to='/compose'>Back</Link>
-        <button onClick={this.uploadData} >Add to library</button>
+      <section id='upload'>
+        <form>
+          <label>Title:
+            <input
+              type='text'
+              value={this.state.title}
+              placeholder='Give this song a name'
+              maxLength={40}
+              onChange={this.changeTitle} />
+          </label>
+          <div>{layersChosen}</div>
+          <label>Composed by:
+            <input
+              type='text'
+              value={this.props.user ? this.props.user.nickname : 'Anon'}
+              readOnly={true} />
+          </label>
+          <label>Select tags:{tagList}</label>
+        </form>
+        <div className='inputs-ctn'>
+          <button onClick={this.goBack} >
+            <span className='fa fa-hand-o-left' />
+            Go back
+          </button>
+          <button onClick={this.uploadData} >
+            Add to library
+            <span className='fa fa-hand-o-right' />
+          </button>
+        </div>
       </section>
     )
   }

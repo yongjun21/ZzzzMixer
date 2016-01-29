@@ -1,7 +1,23 @@
 #mixer {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-#mixer button {
+#mixer > .inputs-ctn {
+  display: flex;
+  justify-content: space-around;
+  flex: 0 0 auto;
+  font-size: 2em;
+  padding: 5%;
+}
+
+#mixer > .bubbles-ctn {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+#mixer .bubble {
   position: absolute;
+  left: 50%;
 }

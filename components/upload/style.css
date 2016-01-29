@@ -1,0 +1,19 @@
+#upload {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+#upload label {
+  display: block;
+}
+
+#upload > .inputs-ctn {
+  display: flex;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  font-size: 1.2em;
+}
+
+.fa-hand-o-left, .fa-hand-o-right {
+  margin: 0 0.5em;
+}

@@ -46,31 +46,31 @@ export const bgColors = [
 
 export const bubbleStyles = [
   {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 50%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 50%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 150%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 150%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 250%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 250%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 350%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 350%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 450%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 450%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 550%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 550%) scale(1) rotate(-30deg)'
   }, {
-    WebkitTransform: 'scale(2) translate(1, 2) rotate(-30deg)',
-    transform: 'scale(2) transform(1, 2) rotate(-30deg)'
+    WebkitTransform: 'translate(0, 650%) scale(1) rotate(-30deg)',
+    transform: 'translate(0, 650%) scale(1) rotate(-30deg)'
   }
 ]
 
 export const defaultBubbleStyle = {
-  marginRight: '-0.4em',
+  margin: '0 -0.4em 0 0',
   WebkitTransform: 'rotate(-30deg)',
   transform: 'rotate(-30deg)'
 }

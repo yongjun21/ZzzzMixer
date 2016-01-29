@@ -64,10 +64,14 @@ export default class Mixer extends React.Component {
 
     return (
       <section id='mixer' style={{backgroundColor: bgColors[this.state.bg]}}>
-        <div>{renderBasket}</div>
-        <button className='fa fa-refresh' onClick={this.randomize} />
-        <button className='fa fa-times' onClick={this.props.unloadTrack} />
-        <Link className='fa fa-check' to='/upload' />
+        <div className='inputs-ctn' >
+          <button className='fa fa-refresh' onClick={this.randomize} />
+          <Link className='fa fa-check' to='/upload' />
+          <button className='fa fa-times' onClick={this.props.unloadTrack} />
+        </div>
+        <div className='bubbles-ctn' >
+          {renderBasket}
+        </div>
       </section>
     )
   }
