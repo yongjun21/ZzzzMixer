@@ -17,9 +17,12 @@ main {
   overflow: hidden;
 }
 
-section {
+main > section {
   flex-grow: 1;
-  overflow: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 a {
@@ -45,4 +48,15 @@ button {
     min-height: 100vh;
     overflow: auto;
   }
+}
+
+.page-enter, .page-leave {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.page-enter-active, .page-leave-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  transition: -webkit-transform,transform 500ms linear;
 }

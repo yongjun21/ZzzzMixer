@@ -37,9 +37,9 @@ export const sampleFileNames = [
 ]
 
 export const titleString = {
-  '/library': 'Found anything you like?',
-  '/compose': 'Ready to make some music',
-  '/upload': 'One more step'
+  '/library': 'Found anything interesting?',
+  '/compose': 'Ready to make some music?',
+  '/upload': 'One more step...'
 }
 
 export const bgColors = [

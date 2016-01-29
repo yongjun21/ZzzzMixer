@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import NavBar from '../navbar'
 import Player from '../player'
 import {addToDB, updateDB, deleteFromDB, fetchDB} from '../helpers-db'
@@ -105,6 +106,7 @@ export default class Main extends React.Component {
 
   render () {
     const childrenProps = Object.assign(this.state, {
+      key: window.location.pathname,
       volumeUp: this.volumeUp,
       loadTrack: this.loadTrack,
       unloadTrack: this.unloadTrack,
@@ -118,7 +120,13 @@ export default class Main extends React.Component {
           user={this.state.user}
           loginUser={loginUser}
           logoutUser={logoutUser.bind(this)} />
-        {React.cloneElement(this.props.children, childrenProps)}
+        <ReactCSSTransitionGroup
+          component='section'
+          transitionName='page'
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={600} >
+          {React.cloneElement(this.props.children, childrenProps)}
+        </ReactCSSTransitionGroup>
         <Player
           selectedTrack={this.state.selectedTrack}
           playing={this.state.playing}

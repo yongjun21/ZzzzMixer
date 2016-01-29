@@ -1,3 +1,15 @@
-[![Stories in Ready](https://badge.waffle.io/tongrhj/Zmixer.png?label=ready&title=Ready)](https://waffle.io/tongrhj/Zmixer)
-# Zmixer
-A single page app
+# Zzzz Mixer
+A Single Page App built in React
+
+Deployed at [stub]
+
+### What it does? How it works?
+
+### Tools, APIs & Frameworks
+- React
+- React-router
+- CouchDB
+- PouchDB
+- Auth0
+- Web audio/Howler.js
+- Webpack

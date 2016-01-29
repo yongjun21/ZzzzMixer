@@ -1,4 +1,4 @@
-import Auth0Lock from 'auth0-lock'
+/* global Auth0Lock */
 
 const lock = new Auth0Lock('6epBfuNAf2YdSMlMEDRrFdb2nVmeh1xM', 'yongjun21.auth0.com')
 

@@ -4,18 +4,17 @@
   padding: 2% 1%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   flex: 0 0 auto;
 }
 
-.fa-reply, .fa-share {
+.fa-share {
   font-size: 0.5rem;
   text-align: center;
   flex: 0 0 6em;
 }
 
-.fa-reply::before, .fa-share::before {
+.fa-share::before {
   display: block;
   font-size: 1.2rem;
 }
@@ -36,7 +35,7 @@
   margin-right: 3px;
 }
 
-#navbar > .title-ctn {
+#navbar > .title {
   flex-grow: 1;
 }
 

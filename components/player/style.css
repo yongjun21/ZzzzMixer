@@ -2,7 +2,8 @@
   position: relative;
   box-sizing: border-box;
   background-color: dimgrey;
-  flex: 0 0 24vw;
+  flex: 0 0 27vw;
+  margin-bottom: -3vw;
   padding: 1%;
 }
 
@@ -10,7 +11,7 @@
   position: absolute;
   box-sizing: content-box;
   left: 50%;
-  bottom: -3vw;
+  bottom: 0;
   width: 30vw;
   height: 30vw;
   padding: 0;
@@ -46,7 +47,7 @@
   display: block;
   position: absolute;
   right: 0;
-  bottom: 0;
+  top: 0;
   padding: 1%;
   font-size: 1.2rem;
 }
@@ -59,11 +60,11 @@
 @media (min-width: 500px) {
   #player {
     width: 500px;
-    flex-basis: 120px;
+    flex-basis: 135px;
+    margin-bottom: -15px;
   }
 
   #player > .play-button {
-    bottom: -15px;
     width: 150px;
     height: 150px;
     margin-left: -75px;
