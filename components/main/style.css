@@ -1,6 +1,6 @@
 html {
   font-family: 'Ubuntu Condensed', sans-serif;
-  color: white;
+  color: whitesmoke;
   font-size: 5vw;
 }
 
@@ -58,5 +58,6 @@ button {
 .page-enter-active, .page-leave-active {
   -webkit-transform: translateX(0);
   transform: translateX(0);
-  transition: -webkit-transform,transform 500ms linear;
+  -webkit-transition: -webkit-transform 500ms linear;
+  transition: transform 500ms linear;
 }

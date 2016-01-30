@@ -20,7 +20,7 @@ localDB.sync(remoteDB, {
   retry: true
 })
 
-export function loadAudio (sampleURLs, idx) {
+export function retrieveAudio (sampleURLs, idx, loadAudio) {
   const fileName = sampleFileNames[idx]
   const extName = fileName + '.mp4'
 
@@ -40,6 +40,9 @@ export function loadAudio (sampleURLs, idx) {
           return window.URL.createObjectURL(blob)
         })
         .then(url => sampleURLs[idx] = url)
+    })
+    .then(() => {
+      loadAudio()
     })
 }
 

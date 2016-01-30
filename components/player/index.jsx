@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import {Howl} from 'howler'
-import {loadAudio} from '../helpers-db'
+import {retrieveAudio} from '../helpers-db'
 import './style.css'
 
 const audioSet = Array(10).fill(null)
@@ -54,15 +54,19 @@ export default class Player extends React.Component {
           if (this.props.playing && !lastPlayingState) audioSet[idx].play()
           else if (!this.props.playing && lastPlayingState) audioSet[idx].pause()
         } else {
-          if (!sampleURLs[idx]) loadAudio(sampleURLs, idx)
-          audioSet[idx] = new Howl({
-            urls: [sampleURLs[idx]],
-            format: 'mp4',
-            buffer: true,
-            loop: true,
-            volume: 0.3 * layer
-          })
-          if (this.props.playing) audioSet[idx].play()
+          let loadAudio = function () {
+            audioSet[idx] = new Howl({
+              urls: [sampleURLs[idx]],
+              format: 'mp4',
+              buffer: false,
+              loop: true,
+              volume: 0.3 * layer
+            })
+            if (this.props.playing) audioSet[idx].play()
+          }
+          loadAudio = loadAudio.bind(this)
+          if (sampleURLs[idx]) loadAudio()
+          else retrieveAudio(sampleURLs, idx, loadAudio)
         }
       } else {
         if (audioSet[idx]) {
