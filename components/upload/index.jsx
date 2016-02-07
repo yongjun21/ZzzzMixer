@@ -82,30 +82,29 @@ export default class Upload extends React.Component {
         checked: this.state.tagState[tag],
         onChange: this.toggleTag
       }
-      tagList.push(<label key={idx} ><input {...checkboxProps} />{tag}</label>)
+      tagList.push(<span key={idx} className='tag'><input {...checkboxProps} />{tag}</span>)
     })
 
     return (
       <section id='upload'>
+        <div className='bubbles-ctn'>{layersChosen}</div>
         <form>
-          <label>Title:
-            <input
-              type='text'
-              value={this.state.title}
-              placeholder='Give this song a name'
-              maxLength={40}
-              onChange={this.changeTitle} />
-          </label>
-          <div>{layersChosen}</div>
-          <label>Composed by:
-            <input
-              type='text'
-              value={this.props.user ? this.props.user.nickname : 'Anon'}
-              readOnly={true} />
-          </label>
-          <label>Select tags:{tagList}</label>
+          <label>Title:</label>
+          <input
+            type='text'
+            value={this.state.title}
+            placeholder='Give this song a name'
+            maxLength={40}
+            onChange={this.changeTitle} />
+          <label>Composed by:</label>
+          <input
+            type='text'
+            value={this.props.user ? this.props.user.nickname : 'Anon'}
+            readOnly={true} />
+          <label>Select tags:</label>
+          <div className='tags-ctn'>{tagList}</div>
         </form>
-        <div className='inputs-ctn'>
+        <div className='nav-ctn'>
           <button onClick={this.goBack} >
             <span className='fa fa-hand-o-left' />
             Go back

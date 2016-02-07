@@ -36,6 +36,20 @@ button {
   background-color: inherit;
 }
 
+label {
+  display: block;
+}
+
+input[type="text"] {
+  display: block;
+  color: black;
+  padding: 1% 3%;
+}
+
+input[type="checkbox"] {
+  margin: 0 0.5em;
+}
+
 @media (min-width: 500px) {
   html {
     font-size: 25px;

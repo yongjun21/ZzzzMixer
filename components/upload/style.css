@@ -2,17 +2,55 @@
   flex: 0 0 100%;
 }
 
-#upload label {
-  display: block;
+#upload > .bubbles-ctn {
+  padding: 0.5em 4% 0.7em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
-#upload > .inputs-ctn {
+#upload > form {
+  padding: 0 1%;
+}
+
+#upload > .nav-ctn {
   display: flex;
   justify-content: space-between;
   flex: 0 0 auto;
   font-size: 1.2em;
+  margin-top: 2em;
+  padding: 0 1%;
 }
 
-.fa-hand-o-left, .fa-hand-o-right {
-  margin: 0 0.5em;
+#upload label {
+  display: block;
+  margin-top: 0.7em;
+  margin-bottom: 0.4em;
+  font-size: 1.2em;
+}
+
+#upload .nav-ctn button {
+  background-color: #B08B0D;
+  color: black;
+  border-radius: 6px;
+}
+
+.fa-hand-o-left {
+  margin-right: 0.5em;
+}
+
+.fa-hand-o-right {
+  margin-left: 0.5em;
+}
+
+#upload .tags-ctn {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 1%;
+}
+
+#upload .tag {
+  flex: 0 0 50%;
 }
