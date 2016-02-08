@@ -36,6 +36,7 @@
 
 #player > .title {
   font-size: 1.2rem;
+  max-width: 5em;
 }
 
 #player > .composer {

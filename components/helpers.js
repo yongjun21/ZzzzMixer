@@ -3,11 +3,13 @@ export const tagNames = [
   'Nature',
   'Urban',
   'Sea',
-  'Weather',
+  'Forest',
+  'Calm',
+  'Stormy',
   'Instrumental',
   'Vocal',
   'New age',
-  'White noise'
+  'Noise'
 ]
 
 export const sampleNames = [

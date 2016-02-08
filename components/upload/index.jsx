@@ -94,13 +94,13 @@ export default class Upload extends React.Component {
             type='text'
             value={this.state.title}
             placeholder='Give this song a name'
-            maxLength={40}
+            maxLength={30}
             onChange={this.changeTitle} />
           <label>Composed by:</label>
           <input
             type='text'
             value={this.props.user ? this.props.user.nickname : 'Anon'}
-            readOnly={true} />
+            readOnly='true' />
           <label>Select tags:</label>
           <div className='tags-ctn'>{tagList}</div>
         </form>
