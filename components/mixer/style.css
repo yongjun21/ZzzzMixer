@@ -13,10 +13,17 @@
 }
 
 #mixer > .bubbles-ctn {
+  flex-basis: 100vw;
   flex-grow: 1;
 }
 
 #mixer .bubble {
   position: absolute;
   left: 50%;
+}
+
+@media (min-width: 500px) {
+  #mixer > .bubbles-ctn {
+    flex-basis: 500px;
+  }
 }

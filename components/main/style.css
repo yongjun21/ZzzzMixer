@@ -35,13 +35,15 @@ button {
   outline: none;
   background-color: inherit;
 }
-
+pm
 label {
   display: block;
 }
 
 input[type="text"] {
   display: block;
+  box-sizing: border-box;
+  width: 100%;
   color: black;
   padding: 1% 3%;
 }

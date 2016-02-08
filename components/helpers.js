@@ -52,26 +52,29 @@ export const bgColors = [
 
 export const bubbleStyles = [
   {
-    WebkitTransform: 'translate(0, 50%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 50%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(160%, 450%) scale(3) rotate(-20deg)',
+    transform: 'translate(160%, 450%) scale(3) rotate(-20deg)'
   }, {
-    WebkitTransform: 'translate(0, 150%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 150%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(-120%, 560%) scale(2.5) rotate(0deg)',
+    transform: 'translate(-120%, 560%) scale(2.5) rotate(0deg)'
   }, {
-    WebkitTransform: 'translate(0, 250%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 250%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(60%, 180%) scale(2.5) rotate(30deg)',
+    transform: 'translate(60%, 180%) scale(2.5) rotate(30deg)'
   }, {
-    WebkitTransform: 'translate(0, 350%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 350%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(-70%, 350%) scale(1.5) rotate(10deg)',
+    transform: 'translate(-70%, 350%) scale(1.5) rotate(10deg)'
   }, {
-    WebkitTransform: 'translate(0, 450%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 450%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(-180%, 190%) scale(2) rotate(-30deg)',
+    transform: 'translate(-180%, 190%) scale(2) rotate(-30deg)'
   }, {
-    WebkitTransform: 'translate(0, 550%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 550%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(250%, 250%) scale(1.2) rotate(-30deg)',
+    transform: 'translate(250%, 250%) scale(1.2) rotate(-30deg)'
   }, {
-    WebkitTransform: 'translate(0, 650%) scale(1) rotate(-30deg)',
-    transform: 'translate(0, 650%) scale(1) rotate(-30deg)'
+    WebkitTransform: 'translate(-240%, 370%) scale(1.6) rotate(20deg)',
+    transform: 'translate(-240%, 370%) scale(1.6) rotate(20deg)'
+  }, {
+    WebkitTransform: 'translate(60%, 650%) scale(1.2) rotate(-30deg)',
+    transform: 'translate(60%, 650%) scale(1.2) rotate(-30deg)'
   }
 ]
 
