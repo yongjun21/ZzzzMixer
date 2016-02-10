@@ -27,19 +27,19 @@ export function retrieveAudio (sampleURLs, idx, loadAudio) {
   sampleURLs[idx] = 'sample/' + extName
 
   audioDB.getAttachment(fileName, extName)
-    .then(blob => window.URL.createObjectURL(blob))
-    .then(url => sampleURLs[idx] = url)
+    .then((blob) => window.URL.createObjectURL(blob))
+    .then((url) => { sampleURLs[idx] = url })
     .catch(() => {
       console.log('fetching audio sample ' + extName)
       window.fetch(window.location.origin + '/sample/' + extName)
-        .then(res => res.blob())
-        .then(blob => {
-          audioDB.put({_id: fileName}).then(result => {
+        .then((res) => res.blob())
+        .then((blob) => {
+          audioDB.put({_id: fileName}).then((result) => {
             audioDB.putAttachment(fileName, extName, result.rev, blob, 'audio/mp4')
           })
           return window.URL.createObjectURL(blob)
         })
-        .then(url => sampleURLs[idx] = url)
+        .then((url) => { sampleURLs[idx] = url })
     })
     .then(() => {
       loadAudio()
@@ -60,13 +60,13 @@ export function deleteFromDB (track) {
 
 function fetchLocal (cb) {
   localDB.allDocs({include_docs: true})
-    .then(docs => docs.rows.map(row => row.doc))
-    .then(collection => cb({collection: collection}))
+    .then((docs) => docs.rows.map((row) => row.doc))
+    .then((collection) => cb({collection: collection}))
 }
 
 export function fetchDB (cb) {
   fetchLocal(cb)
-  localDB.replicate.from(remoteDB).then(result => {
+  localDB.replicate.from(remoteDB).then((result) => {
     console.log(result)
     fetchLocal(cb)
   })

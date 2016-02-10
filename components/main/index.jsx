@@ -47,11 +47,11 @@ export default class Main extends React.Component {
 
   loadTrack (trackID) {
     function callback () {
-      const selectedTrack = this.state.collection.find(track => {
+      const selectedTrack = this.state.collection.find((track) => {
         return track._id === trackID
       })
       selectedTrack.timesPlayed++
-      updateDB(selectedTrack).then(result => {
+      updateDB(selectedTrack).then((result) => {
         selectedTrack._rev = result.rev
         this.setState({
           selectedTrack: selectedTrack,
@@ -74,7 +74,7 @@ export default class Main extends React.Component {
     function callback (event) {
       event.stopPropagation()
       const toRemove = this.state.collection.splice(
-        this.state.collection.findIndex(track => {
+        this.state.collection.findIndex((track) => {
           return track._id === trackID
         }), 1)[0]
       deleteFromDB(toRemove)
@@ -92,7 +92,7 @@ export default class Main extends React.Component {
       timesPlayed: 0
     }
 
-    addToDB(newTrack).then(result => {
+    addToDB(newTrack).then((result) => {
       newTrack._id = result.id
       newTrack._rev = result.rev
       this.setState({

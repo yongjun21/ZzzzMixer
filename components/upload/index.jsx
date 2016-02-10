@@ -18,11 +18,11 @@ export default class Upload extends React.Component {
     super(props)
 
     if (this.props.selectedTrack) {
-      tagNames.forEach(tag => {
+      tagNames.forEach((tag) => {
         tagState[tag] = this.props.selectedTrack.tags.indexOf(tag) > -1
       })
     } else {
-      tagNames.forEach(tag => tagState[tag] = false)
+      tagNames.forEach((tag) => { tagState[tag] = false })
     }
 
     this.state = {
@@ -48,7 +48,7 @@ export default class Upload extends React.Component {
   uploadData () {
     const newData = {
       title: this.state.title || 'Untitled',
-      tags: tagNames.filter(tag => this.state.tagState[tag])
+      tags: tagNames.filter((tag) => this.state.tagState[tag])
     }
     if (!newData.tags.length) newData.tags.push('No tag')
     this.props.uploadHandler(newData)
@@ -71,8 +71,8 @@ export default class Upload extends React.Component {
         active: false
       }
     })
-    .filter(props => props.sampleID > -1)
-    .map(props => <SoundBubble {...props} />)
+    .filter((props) => props.sampleID > -1)
+    .map((props) => <SoundBubble {...props} />)
 
     const tagList = []
     tagNames.map((tag, idx) => {

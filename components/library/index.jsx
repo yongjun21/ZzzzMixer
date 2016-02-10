@@ -38,15 +38,15 @@ export default class Library extends React.Component {
       .map((tag, idx) => <option key={idx} >{tag}</option>)
 
     let filteredCollection = (this.state.byMe && this.props.user)
-      ? this.props.collection.filter(track => track.composedBy &&
+      ? this.props.collection.filter((track) => track.composedBy &&
         track.composedBy.user_id === this.props.user.user_id)
       : this.props.collection
     if (this.state.tagFilter) {
-      filteredCollection = filteredCollection.filter(track => {
+      filteredCollection = filteredCollection.filter((track) => {
         return track.tags.indexOf(tagNames[this.state.tagFilter - 1]) > -1
       })
     }
-    filteredCollection = sortBy(filteredCollection, track => -track.timesPlayed)
+    filteredCollection = sortBy(filteredCollection, (track) => -track.timesPlayed)
     filteredCollection = filteredCollection.map((trackInfo, idx) => {
       const allowDelete = !!this.props.user &&
         (!trackInfo.composedBy || this.props.user.user_id === trackInfo.composedBy.user_id)

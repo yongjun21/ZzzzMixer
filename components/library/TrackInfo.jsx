@@ -28,8 +28,8 @@ export default class TrackInfo extends React.Component {
           active: false
         }
       })
-      .filter(props => props.sampleID > -1)
-      .map(props => <SoundBubble {...props} />)
+      .filter((props) => props.sampleID > -1)
+      .map((props) => <SoundBubble {...props} />)
 
     const tagSet = this.props.tags.map((tag, idx) => {
       return <span className='track-tag' key={idx}>{tag}</span>
