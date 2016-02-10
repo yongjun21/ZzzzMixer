@@ -8,6 +8,23 @@ Deployed at [https://zmixer.daburu.xyz](https://zmixer.daburu.xyz)
 
 ### Motivation
 
+### Creation process
+
+1. Components and States
+    - Player
+    - Music library
+    - Compose area
+    - Upload form
+    - Navigation bar
+    - Sound bubble
+2. Setting up web audio
+3. Views and Routing
+4. Backend
+    1. Audio files
+    2. Music library
+5. Authentication and Logins
+6. Styling & Transition
+7. Organizing the project directory
 
 ### Tools, APIs & Frameworks
 - React
